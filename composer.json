@@ -1,0 +1,15 @@
+{
+  "name": "schibsted/payment-php-sdk",
+  "description": "Schibsted ePayment Platform SDK",
+  "homepage": "https://github.schibsted.io/spt-payment/php-sdk",
+  "autoload": {
+    "psr-0": {
+      "schibsted": "src/"
+    }
+  },
+  "require-dev": {
+    "guzzlehttp/guzzle": "~5.0",
+    "amphp/artax": "v1.0.0-rc6",
+    "phpunit/phpunit": "4.2.6"
+  }
+}
