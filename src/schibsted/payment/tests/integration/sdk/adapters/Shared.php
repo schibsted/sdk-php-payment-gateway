@@ -11,12 +11,11 @@ class Shared extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        //@TODO CONNECTIONS
-        try {
-            $config = $this->config + Connections::get('httpbin', ['config' => true]);
-        } catch (ConfigException $e) {
-            return $this->markTestSkipped("Skipped Payment SDK test as missing 'pms.payment.pms' connection");
-        }
+        return $this->markTestSkipped('Skipped Integration test by default. Remove this and set $config to enable');
+        $config = [
+            // 'host' => %HOST%,
+            // 'port' => %PORT%,
+        ];
         $this->sdk = new Rest(['connection' => $config]);
     }
 

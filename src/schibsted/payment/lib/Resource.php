@@ -3,7 +3,6 @@
 namespace schibsted\payment\lib;
 
 use L10n_String;
-use datasources\Connections;
 use schibsted\payment\sdk\Rest;
 
 abstract class Resource
@@ -21,7 +20,6 @@ abstract class Resource
 
     public function __construct(array $options = array())
     {
-
         $class = false;
         if (array_key_exists('sdk', $options)) {
             $sdk = $options['sdk'];
@@ -31,9 +29,6 @@ abstract class Resource
             } elseif (is_array($sdk)) {
                 $config = $sdk;
             }
-        } else {
-            $connection = Connections::get('pms.payment.' . $this->_connection_name, ['config' => true]);
-            $config = ['connection' => $connection];
         }
         $this->_sdk = new Rest($config);
     }
