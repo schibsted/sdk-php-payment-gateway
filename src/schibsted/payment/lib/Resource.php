@@ -2,7 +2,6 @@
 
 namespace schibsted\payment\lib;
 
-use L10n_String;
 use schibsted\payment\sdk\Rest;
 
 abstract class Resource
@@ -29,6 +28,8 @@ abstract class Resource
             } elseif (is_array($sdk)) {
                 $config = $sdk;
             }
+        } else {
+            $config = $options;
         }
         $this->_sdk = new Rest($config);
     }
@@ -50,7 +51,7 @@ abstract class Resource
 
     public function api($api, array $params = array())
     {
-        return $this->path() . L10n_String::insert($api, $params);
+        return $this->path() . Utilities::insert($api, $params);
     }
 
     public function get($id, array $query = [])
