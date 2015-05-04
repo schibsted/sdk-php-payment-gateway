@@ -113,7 +113,7 @@ class Curl extends \schibsted\payment\lib\sdk\Adapter
         foreach ($parts as $part) {
             foreach ($result as $key => &$value) {
                 if (strpos($part, $key) === 0) {
-                    $value = substr($part, strlen($key) + 2);
+                    $value = trim(substr($part, strlen($key) + 2));
                 }
             }
         }

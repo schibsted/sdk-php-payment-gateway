@@ -62,8 +62,6 @@ class Adapter extends \schibsted\payment\lib\Object implements AdapterInterface
                     ($content && isset($content['developerMessage'])) ?  $content['developerMessage'] : '' ;
                 if ($devmsg) {
                     $this->_log('debug', "PMS dev msg: $devmsg", "PMS", __FILE__, __CLASS__, __FUNCTION__, __LINE__);
-                } else {
-                    $this->_log('debug', print_r($result, true), "PMS", __FILE__, __CLASS__, __FUNCTION__, __LINE__);
                 }
             }
 
