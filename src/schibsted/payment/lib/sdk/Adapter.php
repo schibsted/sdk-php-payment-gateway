@@ -18,7 +18,7 @@ class Adapter extends \schibsted\payment\lib\Object implements AdapterInterface
 
     public function execute($url, $method = 'GET', array $headers = array(), $data = null, array $options = array())
     {
-        $this->_log('debug', 'Query: ' . $method . ' ' . $url, "PMS", __FILE__, __CLASS__, __FUNCTION__, __LINE__);
+        $this->_log('debug', "Query : $method : $url", "PMS", __FILE__, __CLASS__, __FUNCTION__, __LINE__);
         $result = $this->_makeRequest($url, $method, $data);
         $request_id = !empty($result['headers']['X-Request-Id']) ? $result['headers']['X-Request-Id'] : '';
 
@@ -26,14 +26,14 @@ class Adapter extends \schibsted\payment\lib\Object implements AdapterInterface
 
         if ($result['code'] < 400 && $content !== false && $result['code'] != 0) {
             $response = new Success(['code' => $result['code'], 'content' => $content]);
-            $this->_log('debug', 'Result: ' . $result['code'] . ' : Success : ' . $request_id, "PMS", __FILE__, __CLASS__, __FUNCTION__, __LINE__);
+            $this->_log('debug', 'Success : ' . $result['code'] . ' : ' . $request_id, "PMS", __FILE__, __CLASS__, __FUNCTION__, __LINE__);
         } elseif ($result['code'] == 404 && isset($result['headers']['Content-Type']) && $result['headers']['Content-Type'] != 'application/json') {
                 $url = !empty($result['last_url']) ? $result['last_url'] : $url;
                 $message = $developer_message = "$url not found";
                 $error_number = 404;
                 $content = compact('error_number', 'message', 'developer_message');
                 $response = new Failure(['code' => $result['code'], 'content' => $content, 'meta' => $result]);
-                $this->_log('alert', "Result: 404 : Failure : $developer_message : " . $request_id, "PMS", __FILE__, __CLASS__, __FUNCTION__, __LINE__);
+                $this->_log('alert', "FAILURE : 404 : $developer_message : " . $request_id, "PMS", __FILE__, __CLASS__, __FUNCTION__, __LINE__);
         } else {
             $meta = $result;
             unset($meta['code']);
@@ -47,7 +47,7 @@ class Adapter extends \schibsted\payment\lib\Object implements AdapterInterface
                 }
                 $response = new Failure(['code' => $result['code'], 'content' => $content, 'meta' => $meta]);
                 $message = !empty($content['message']) ? $content['message'] : 'Communication error';
-                $this->_log('alert', 'Result: ' . $result['code'] . " : Failure : $message : " . $request_id, "PMS", __FILE__, __CLASS__, __FUNCTION__, __LINE__);
+                $this->_log('alert', 'FAILURE : ' . $result['code'] . " : $message : $request_id", "PMS", __FILE__, __CLASS__, __FUNCTION__, __LINE__);
                 if (isset($result['error'])) {
                     $this->_log('debug', $result['error'], "PMS", __FILE__, __CLASS__, __FUNCTION__, __LINE__);
                 }
@@ -57,7 +57,7 @@ class Adapter extends \schibsted\payment\lib\Object implements AdapterInterface
             } else {
                 $response = new Error(['code' => $result['code'], 'content' => $content, 'meta' => $meta]);
                 $message = !empty($content['message']) ? $content['message'] : 'Service error';
-                $this->_log('error', 'Result: ' . $result['code'] . " : Error : $message", "PMS", __FILE__, __CLASS__, __FUNCTION__, __LINE__);
+                $this->_log('error', 'ERROR : ' . $result['code'] . " : $message : $request_id", "PMS", __FILE__, __CLASS__, __FUNCTION__, __LINE__);
                 $devmsg = ($content && isset($content['errorNumber'])) ?  $content['errorNumber'] : '' .
                     ($content && isset($content['developerMessage'])) ?  $content['developerMessage'] : '' ;
                 if ($devmsg) {
