@@ -2,9 +2,24 @@
 <phpunit bootstrap="../../../../vendor/autoload.php">
 
     <testsuites>
-        <testsuite name="Test suite">
-            <directory>./</directory>
+        <testsuite name="Unit Tests">
+            <directory suffix="Test.php">unit/</directory>
+        </testsuite>
+        <testsuite name="Integration Tests">
+            <directory suffix="Test.php">integration/</directory>
         </testsuite>
     </testsuites>
 
+
+
+    <filter>
+        <whitelist addUncoveredFilesFromWhitelist="true">
+            <directory suffix=".php">../.</directory>
+            <exclude>
+                <directory>../tests</directory>
+                <file>../sdk/adapters/Artax.php</file>
+                <file>../sdk/adapters/Guzzle.php</file>
+            </exclude>
+        </whitelist>
+    </filter>
 </phpunit>
