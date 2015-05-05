@@ -28,12 +28,19 @@ class Adapter extends \schibsted\payment\lib\Object implements AdapterInterface
             $response = new Success(['code' => $result['code'], 'content' => $content]);
             $this->_log('debug', 'Success : ' . $result['code'] . ' : ' . $request_id, "PMS", __FILE__, __CLASS__, __FUNCTION__, __LINE__);
         } elseif ($result['code'] == 404 && isset($result['headers']['Content-Type']) && $result['headers']['Content-Type'] != 'application/json') {
-                $url = !empty($result['last_url']) ? $result['last_url'] : $url;
-                $message = $developer_message = "$url not found";
-                $error_number = 404;
-                $content = compact('error_number', 'message', 'developer_message');
-                $response = new Failure(['code' => $result['code'], 'content' => $content, 'meta' => $result]);
-                $this->_log('alert', "FAILURE : 404 : $developer_message : " . $request_id, "PMS", __FILE__, __CLASS__, __FUNCTION__, __LINE__);
+            $url = !empty($result['last_url']) ? $result['last_url'] : $url;
+            $message = $developer_message = "$url not found";
+            $error_number = 404;
+            $content = compact('error_number', 'message', 'developer_message');
+            $response = new Failure(['code' => $result['code'], 'content' => $content, 'meta' => $result]);
+            $this->_log('alert', "FAILURE : $error_number : $developer_message : " . $request_id, "PMS", __FILE__, __CLASS__, __FUNCTION__, __LINE__);
+        } elseif ($content && !is_array($content)) {
+            $url = !empty($result['last_url']) ? $result['last_url'] : $url;
+            $message = $developer_message = "$url returned invalid json (not array/object)";
+            $error_number = 500;
+            $content = compact('error_number', 'message', 'developer_message');
+            $response = new Failure(['code' => $result['code'], 'content' => $content, 'meta' => $result]);
+            $this->_log('alert', "FAILURE : $error_number : $developer_message : " . $request_id, "PMS", __FILE__, __CLASS__, __FUNCTION__, __LINE__);
         } else {
             $meta = $result;
             unset($meta['code']);

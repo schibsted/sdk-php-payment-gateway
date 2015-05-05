@@ -25,6 +25,7 @@ class Curl extends \schibsted\payment\lib\sdk\Adapter
      */
     protected function _makeRequest($url, $method, $post = null, $ch = null)
     {
+        $result = [];
         $start = microtime(true);
         if (!$ch) {
             $ch = curl_init();
@@ -58,6 +59,7 @@ class Curl extends \schibsted\payment\lib\sdk\Adapter
                 if ($post) {
                     $data_string = is_string($post) ? $post : json_encode($post);
                     $opts[CURLOPT_POSTFIELDS] = $data_string;
+                    $result['post_string'] = $data_string; // For debugging, see what was posted
                     $opts[CURLOPT_HTTPHEADER][] = 'Content-Length: ' . strlen($data_string);
                 }
                 break;
@@ -68,7 +70,6 @@ class Curl extends \schibsted\payment\lib\sdk\Adapter
 
         curl_setopt_array($ch, $opts);
 
-        $result = [];
         try {
             $result['content']  = curl_exec($ch);
         } catch (\Exception $e) {
