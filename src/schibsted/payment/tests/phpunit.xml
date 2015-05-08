@@ -1,5 +1,17 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<phpunit bootstrap="../../../../vendor/autoload.php">
+<phpunit
+    backupGlobals               = "false"
+    backupStaticAttributes      = "false"
+    colors                      = "false"
+    convertErrorsToExceptions   = "true"
+    convertNoticesToExceptions  = "true"
+    convertWarningsToExceptions = "true"
+    processIsolation            = "false"
+    stopOnFailure               = "false"
+    stopOnError                 = "false"
+    stopOnIncomplete            = "false"
+    syntaxCheck                 = "false"
+    bootstrap                   = "config/test_bootstrap.php">
 
     <testsuites>
         <testsuite name="Unit Tests">

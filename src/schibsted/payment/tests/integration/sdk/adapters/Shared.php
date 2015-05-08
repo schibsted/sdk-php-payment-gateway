@@ -5,17 +5,20 @@ namespace schibsted\payment\tests\integration\sdk\adapters;
 use schibsted\payment\sdk\Rest;
 use schibsted\payment\sdk\response\Failure;
 use schibsted\payment\sdk\response\Success;
+use schibsted\payment\lib\Connections;
 
 class Shared extends \PHPUnit_Framework_TestCase
 {
 
+    protected $connection_name = 'shared';
+
     public function setUp()
     {
-        return $this->markTestSkipped('Skipped Integration test by default. Remove this and set $config to enable');
-        $config = [
-            // 'host' => %HOST%,
-            // 'port' => %PORT%,
-        ];
+        $config = Connections::get($this->connection_name);
+        $config += $this->config;
+        if (!$config) {
+            return $this->markTestSkipped('Skipped Integration test by default. Remove this and set $config to enable');
+        }
         $this->sdk = new Rest(['connection' => $config]);
     }
 

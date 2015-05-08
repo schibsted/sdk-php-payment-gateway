@@ -21,7 +21,6 @@ class ArtaxTest extends Shared
 
     public function testFailure()
     {
-        return $this->markTestSkipped("Disabled failure tests as it is a very slow timeout test");
         $config = [
             'host' => 'http://asasdfasdfsdf',
             'port' => '666',

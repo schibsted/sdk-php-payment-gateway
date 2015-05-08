@@ -7,7 +7,7 @@ use GuzzleHttp\Ring\Client\StreamHandler;
 
 class Guzzle extends \schibsted\payment\lib\sdk\Adapter
 {
-    const USER_AGENT = 'reckoning-payment-sdk-guzzle-5.2';
+    const USER_AGENT = 'payment-sdk-guzzle-5.2';
 
     protected $_adapter_config_defaults = [
         'timeout'   => 5,

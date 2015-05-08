@@ -4,7 +4,7 @@ namespace schibsted\payment\sdk\adapters;
 
 class Curl extends \schibsted\payment\lib\sdk\Adapter
 {
-    const USER_AGENT = 'reckoning-payment-sdk-curl-0.3';
+    const USER_AGENT = 'payment-sdk-curl-0.3';
 
     protected $_adapter_config_defaults = [
         CURLOPT_CONNECTTIMEOUT => 5,

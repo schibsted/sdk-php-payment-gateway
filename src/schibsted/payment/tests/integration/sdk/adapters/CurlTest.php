@@ -20,7 +20,6 @@ class CurlTest extends Shared
 
     public function testFailure()
     {
-        return $this->markTestSkipped("Disabled failure tests as it is a very slow timeout test");
         $config = [
             'host' => 'http://spidpay.vm',
             'port' => '0000',
