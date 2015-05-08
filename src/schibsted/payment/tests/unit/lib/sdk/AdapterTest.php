@@ -54,4 +54,25 @@ class AdapterTest extends \PHPUnit_Framework_TestCase
         $expected = ['id' => 13, 'title' => 'Win'];
         $this->assertEquals($expected, $result->getContent());
     }
+
+    public function testError()
+    {
+        $a = new Adapter();
+        $a->response = ['content' => '', 'code' => null];
+
+        $result = $a->execute('/api/get/title');
+        $this->assertTrue($result instanceof Error, "Result is " . get_class($result));
+    }
+
+    public function testFailure()
+    {
+        $a = new Adapter();
+        $a->response = ['content' => 1, 'code' => 500];
+
+        $result = $a->execute('/api/get/title');
+        $this->assertTrue($result instanceof Failure, "Result is " . get_class($result));
+        $this->assertEquals(500, $result->getCode());
+        $expected = ['error_number' => 500, 'message' => '/api/get/title returned invalid json (not array/object)', 'developer_message' => '/api/get/title returned invalid json (not array/object)'];
+        $this->assertEquals($expected, $result->getContent());
+    }
 }

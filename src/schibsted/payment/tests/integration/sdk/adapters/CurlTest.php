@@ -48,5 +48,10 @@ class CurlTest extends Shared
         $sdk = new Rest(['connection' => Connections::get('curl with proxy')]);
         $result = $sdk->get('/get');
         $this->assertTrue($result instanceof Success);
+
+        $content = $result->getContent();
+        $this->assertFalse(empty($content));
+        $this->assertTrue(isset($content['url']));
+        $this->assertTrue($content['url'] === 'http://httpbin.org/get');
     }
 }

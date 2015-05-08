@@ -7,10 +7,11 @@ Connections::config('shared', [
 ]);
 
 // Connections::config('curl with proxy', [
-    // 'proxy' => [
-        // 'host' => '',
-        // 'port' => '',
-        // 'user' => '',
-        // 'pass' => ''
-    // ]
+//     'host' => 'http://httpbin.org',
+//     'proxy' => [
+//         'host' => 'localhost',
+//         'port' => '8888',
+//         'user' => 'ting',
+//         'pass' => 'tang'
+//     ]
 // ]);
