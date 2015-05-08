@@ -17,7 +17,7 @@ class Shared extends \PHPUnit_Framework_TestCase
         $config = Connections::get($this->connection_name);
         $config += $this->config;
         if (!$config) {
-            return $this->markTestSkipped('Skipped Integration test by default. Remove this and set $config to enable');
+            return $this->markTestSkipped('Skipped Integration as connection is not defined.');
         }
         $this->sdk = new Rest(['connection' => $config]);
     }
