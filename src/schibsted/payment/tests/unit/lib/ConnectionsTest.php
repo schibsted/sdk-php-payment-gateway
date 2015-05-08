@@ -24,4 +24,9 @@ class ConnectionsTest extends \PHPUnit_Framework_TestCase
         $result = Connections::get($uid);
         $this->assertEquals($expected, $result);
     }
+
+    public function testGettingEmpty()
+    {
+        $this->assertEquals([], Connections::get('blahblah'));
+    }
 }
