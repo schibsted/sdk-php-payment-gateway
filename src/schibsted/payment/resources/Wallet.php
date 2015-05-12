@@ -17,7 +17,14 @@ class Wallet extends \schibsted\payment\lib\Resource
 
     protected $name = 'v1/wallet';
 
+    const API_WALLET_OPERATIONS = '/{:id}/operations';
+
     protected $_connection_name = 'spidcash';
+
+    public function operations($id, array $query = [])
+    {
+        return $this->_sdk->get($this->api(self::API_WALLET_OPERATIONS, compact('id')), $query);
+    }
 
     public function update($id, array $data = array())
     {
