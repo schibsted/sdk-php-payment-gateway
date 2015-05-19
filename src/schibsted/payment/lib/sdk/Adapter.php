@@ -25,7 +25,7 @@ class Adapter extends \schibsted\payment\lib\Object implements AdapterInterface
         $content = json_decode($result['content'], true);
 
         if ($result['code'] < 400 && $content !== false && $result['code'] != 0) {
-            $response = new Success(['code' => $result['code'], 'content' => $content]);
+            $response = new Success(['code' => $result['code'], 'content' => $content, 'meta' => $this->_extractMeta($result)]);
             $this->_log('debug', 'Success : ' . $result['code'] . ' : ' . $request_id, "PMS", __FILE__, __CLASS__, __FUNCTION__, __LINE__);
         } elseif ($result['code'] == 404 && isset($result['headers']['Content-Type']) && $result['headers']['Content-Type'] != 'application/json') {
             $url = !empty($result['last_url']) ? $result['last_url'] : $url;
@@ -87,5 +87,28 @@ class Adapter extends \schibsted\payment\lib\Object implements AdapterInterface
     protected function _makeRequest($url, $method, $post = null)
     {
         throw new \Exception(__FUNCTION__ . " must be implemented by subclasses of " . __CLASS__);
+    }
+
+    protected function _extractMeta(array $result)
+    {
+        $pagination_header_keys = [
+            'first',
+            'last',
+            'number',
+            'numberOfElements',
+            'size',
+            'totalElements',
+            'totalPages',
+        ];
+        if (array_key_exists('headers', $result)) {
+            foreach ($pagination_header_keys as $key) {
+                if (array_key_exists($key, $result['headers'])) {
+                    $result['pagination'][$key] = $result['headers'][$key];
+                    unset($result['headers'][$key]);
+                }
+            }
+        }
+        unset($result['content']); // content is never part of meta
+        return $result;
     }
 }

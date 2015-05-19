@@ -112,10 +112,9 @@ class Curl extends \schibsted\payment\lib\sdk\Adapter
         ];
 
         foreach ($parts as $part) {
-            foreach ($result as $key => &$value) {
-                if (strpos($part, $key) === 0) {
-                    $value = trim(substr($part, strlen($key) + 2));
-                }
+            if (strpos($part, ': ') !== false) {
+                list($key, $value) = explode(": ", $part);
+                $result[$key] = trim($value);
             }
         }
 
@@ -145,5 +144,13 @@ class Curl extends \schibsted\payment\lib\sdk\Adapter
             $proxy[CURLOPT_PROXYUSERPWD] .= ':' . $this->_proxy['pass'];
         }
         return $proxy;
+    }
+
+    protected function _extractMeta(array $result)
+    {
+        $info = $result['info'];
+        unset($result['info']);
+        $result['url'] = $info['url'];
+        return parent::_extractMeta($result);
     }
 }
