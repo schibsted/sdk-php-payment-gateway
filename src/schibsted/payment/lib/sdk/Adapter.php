@@ -91,19 +91,11 @@ class Adapter extends \schibsted\payment\lib\Object implements AdapterInterface
 
     protected function _extractMeta(array $result)
     {
-        $pagination_header_keys = [
-            'first',
-            'last',
-            'number',
-            'numberOfElements',
-            'size',
-            'totalElements',
-            'totalPages',
-        ];
         if (array_key_exists('headers', $result)) {
-            foreach ($pagination_header_keys as $key) {
-                if (array_key_exists($key, $result['headers'])) {
-                    $result['pagination'][$key] = $result['headers'][$key];
+            foreach ($result['headers'] as $key => $value) {
+                $parts = explode('-', $key);
+                if (count($parts) === 3 && $parts[1] == 'Pagination') {
+                    $result['pagination'][$parts[2]] = $result['headers'][$key];
                     unset($result['headers'][$key]);
                 }
             }
