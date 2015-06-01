@@ -27,6 +27,15 @@ class Order extends \schibsted\payment\lib\Resource
     const API_COMPLETE    = '/{:id}/complete';
     const API_INITIALIZE  = '/{:id}/initialize';
 
+    /**
+     * Search for orders
+     *
+     * query params:
+     *         fromUserId, toUserId, clientId, since, until, filters, pageNumber, pageSize, sort
+     * filters include:
+     *         sales, authorizations, deposits, transfers, withdrawals, escrows, new,
+     *         initialized, partly_captured,completed, cancelled, credited, pending, failed
+     */
     public function find(array $query)
     {
         return $this->_sdk->get($this->api(self::API_FIND), $query);
