@@ -41,6 +41,12 @@ class Adapter extends \schibsted\payment\lib\Object implements AdapterInterface
             $content = compact('error_number', 'message', 'developer_message');
             $response = new Failure(['code' => $result['code'], 'content' => $content, 'meta' => $result]);
             $this->_log('alert', "FAILURE : $error_number : $developer_message : " . $request_id, "PMS", __FILE__, __CLASS__, __FUNCTION__, __LINE__);
+        } elseif ($result['code'] >= 500) {
+            $message = $developer_message = "Service Unavailable";
+            $error_number = $result['code'];
+            $content = compact('error_number', 'message', 'developer_message');
+            $response = new Failure(['code' => $result['code'], 'content' => $content, 'meta' => $result]);
+            $this->_log('alert', "FAILURE : $error_number : $developer_message : " . $request_id, "PMS", __FILE__, __CLASS__, __FUNCTION__, __LINE__);
         } else {
             $meta = $result;
             unset($meta['code']);
