@@ -2,6 +2,8 @@
 
 namespace schibsted\payment\sdk;
 
+use schibsted\payment\sdk\response\Response;
+
 class Rest extends \schibsted\payment\lib\Object
 {
 
@@ -11,6 +13,8 @@ class Rest extends \schibsted\payment\lib\Object
     protected $_adapter_class = 'schibsted\payment\sdk\adapters\Curl';
 
     protected $_adapter = null;
+
+    protected static $_responses = [];
 
     public function _init()
     {
@@ -32,24 +36,41 @@ class Rest extends \schibsted\payment\lib\Object
     public function get($path, array $query = array(), array $headers = array(), array $options = array())
     {
         $url = $this->_url($path, $query);
-        return $this->_adapter()->execute($url, 'GET', $headers, null, $options);
+        $response = $this->_adapter()->execute($url, 'GET', $headers, null, $options);
+        if ($response instanceof Response) {
+            static::$_responses[$url][] = $response->getMeta();
+        }
+        return $response;
     }
 
     public function post($path, $data, array $query = array(), array $headers = array(), array $options = array())
     {
         $url = $this->_url($path, $query);
-        return $this->_adapter()->execute($url, 'POST', $headers, $data, $options);
+        $response = $this->_adapter()->execute($url, 'POST', $headers, $data, $options);
+        if ($response instanceof Response) {
+            static::$_responses[$url][] = $response->getMeta();
+        }
+        return $response;
     }
 
     public function delete($path, array $query = array(), array $headers = array(), array $options = array())
     {
         $url = $this->_url($path, $query);
-        return $this->_adapter()->execute($url, 'DELETE', $headers, null, $options);
+        $response = $this->_adapter()->execute($url, 'DELETE', $headers, null, $options);
+        if ($response instanceof Response) {
+            static::$_responses[$url][] = $response->getMeta();
+        }
+        return $response;
     }
 
     protected function _url($path, array $query = array())
     {
         $uri = $path . (strpos($path, '?') === false && $query ? '?' : '') . http_build_query($query, null, '&');
         return $uri;
+    }
+
+    public static function getMeta()
+    {
+        return static::$_responses;
     }
 }
