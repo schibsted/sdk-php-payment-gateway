@@ -49,7 +49,7 @@ class Guzzle extends \schibsted\payment\lib\sdk\Adapter
         }
 
         if ($response) {
-            $result['headers']  = $response->getHeaders();
+            $result['headers']  = $this->extractHeaders($response->getHeaders());
             $result['code']     = $response->getStatusCode();
             $result['last_url'] = $response->getEffectiveUrl();
             $result['content']  = $response->getBody()->getContents();
@@ -72,5 +72,22 @@ class Guzzle extends \schibsted\payment\lib\sdk\Adapter
             'http'  => $this->_proxy['host'] . ':' . $this->_proxy['port'],
             'https' => $this->_proxy['host'] . ':' . $this->_proxy['port']
         ]];
+    }
+
+    protected function extractHeaders(array $headers)
+    {
+        $return = [
+            'Content-Type'  => null,
+            'Date'          => null,
+            'X-Request-Id'  => null,
+        ];
+        foreach ($headers as $name => $values) {
+            if (is_array($values) && count($values) === 1) {
+                $return[$name] = $values[0];
+            } else {
+                $return[$name] = $values;
+            }
+        }
+        return $return;
     }
 }
