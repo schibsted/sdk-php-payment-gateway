@@ -26,27 +26,27 @@ class Adapter extends \schibsted\payment\lib\Object implements AdapterInterface
 
         if ($result['code'] < 400 && $content !== false && $result['code'] != 0) {
             $response = new Success(['code' => $result['code'], 'content' => $content, 'meta' => $this->_extractMeta($result)]);
-            $this->_log('debug', 'Success : ' . $result['code'] . ' : ' . $request_id, "PMS", __FILE__, __CLASS__, __FUNCTION__, __LINE__);
+            $this->_log('debug', 'Success : ' . $result['code'] . ' : ' . $request_id . ' : ' . $result['latency'] . 's', "PMS", __FILE__, __CLASS__, __FUNCTION__, __LINE__);
         } elseif ($result['code'] == 404 && isset($result['headers']['Content-Type']) && $result['headers']['Content-Type'] != 'application/json') {
             $url = !empty($result['last_url']) ? $result['last_url'] : $url;
             $message = $developer_message = "$url not found";
             $error_number = 404;
             $content = compact('error_number', 'message', 'developer_message');
             $response = new Failure(['code' => $result['code'], 'content' => $content, 'meta' => $result]);
-            $this->_log('alert', "FAILURE : $error_number : $developer_message : " . $request_id, "PMS", __FILE__, __CLASS__, __FUNCTION__, __LINE__);
+            $this->_log('alert', "FAILURE : $error_number : $developer_message : " . $request_id . ' : ' . $result['latency'] . 's', "PMS", __FILE__, __CLASS__, __FUNCTION__, __LINE__);
         } elseif ($content && !is_array($content)) {
             $url = !empty($result['last_url']) ? $result['last_url'] : $url;
             $message = $developer_message = "$url returned invalid json (not array/object)";
             $error_number = 500;
             $content = compact('error_number', 'message', 'developer_message');
             $response = new Failure(['code' => $result['code'], 'content' => $content, 'meta' => $result]);
-            $this->_log('alert', "FAILURE : $error_number : $developer_message : " . $request_id, "PMS", __FILE__, __CLASS__, __FUNCTION__, __LINE__);
+            $this->_log('alert', "FAILURE : $error_number : $developer_message : " . $request_id . ' : ' . $result['latency'] . 's', "PMS", __FILE__, __CLASS__, __FUNCTION__, __LINE__);
         } elseif ($result['code'] >= 500) {
             $message = $developer_message = "Service Unavailable";
             $error_number = $result['code'];
             $content = compact('error_number', 'message', 'developer_message');
             $response = new Failure(['code' => $result['code'], 'content' => $content, 'meta' => $result]);
-            $this->_log('alert', "FAILURE : $error_number : $developer_message : " . $request_id, "PMS", __FILE__, __CLASS__, __FUNCTION__, __LINE__);
+            $this->_log('alert', "FAILURE : $error_number : $developer_message : " . $request_id . ' : ' . $result['latency'] . 's', "PMS", __FILE__, __CLASS__, __FUNCTION__, __LINE__);
         } else {
             $meta = $result;
             unset($meta['code']);
@@ -60,7 +60,7 @@ class Adapter extends \schibsted\payment\lib\Object implements AdapterInterface
                 }
                 $response = new Failure(['code' => $result['code'], 'content' => $content, 'meta' => $meta]);
                 $message = !empty($content['message']) ? $content['message'] : 'Communication error';
-                $this->_log('alert', 'FAILURE : ' . $result['code'] . " : $message : $request_id", "PMS", __FILE__, __CLASS__, __FUNCTION__, __LINE__);
+                $this->_log('alert', 'FAILURE : ' . $result['code'] . " : $message : $request_id : " . $result['latency'] . 's', "PMS", __FILE__, __CLASS__, __FUNCTION__, __LINE__);
                 if (isset($result['error'])) {
                     $this->_log('debug', $result['error'], "PMS", __FILE__, __CLASS__, __FUNCTION__, __LINE__);
                 }
@@ -70,7 +70,7 @@ class Adapter extends \schibsted\payment\lib\Object implements AdapterInterface
             } else {
                 $response = new Error(['code' => $result['code'], 'content' => $content, 'meta' => $meta]);
                 $message = !empty($content['message']) ? $content['message'] : 'Service error';
-                $this->_log('error', 'ERROR : ' . $result['code'] . " : $message : $request_id", "PMS", __FILE__, __CLASS__, __FUNCTION__, __LINE__);
+                $this->_log('error', 'ERROR : ' . $result['code'] . " : $message : $request_id : " . $result['latency'] . 's', "PMS", __FILE__, __CLASS__, __FUNCTION__, __LINE__);
                 $devmsg = ($content && isset($content['errorNumber'])) ?  $content['errorNumber'] : '' .
                     ($content && isset($content['developerMessage'])) ?  $content['developerMessage'] : '' ;
                 if ($devmsg) {
