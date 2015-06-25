@@ -49,7 +49,6 @@ class Adapter extends \schibsted\payment\lib\Object implements AdapterInterface
             $this->_log('alert', "FAILURE : $error_number : $developer_message : " . $request_id . ' : ' . $result['latency'] . 's', "PMS", __FILE__, __CLASS__, __FUNCTION__, __LINE__);
         } else {
             $meta = $result;
-            unset($meta['code']);
             unset($meta['content']);
             if (array_key_exists('errno', $result)) {
                 if (empty($result['code']) && isset($result['errno'])) {
