@@ -23,8 +23,8 @@ class CurlTest extends Shared
     public function testFailure()
     {
         $config = [
-            'host' => 'http://spidpay.vm',
-            'port' => '0000',
+            'host' => 'http://google.com',
+            'port' => '666',
 
             'adapter_config' => [
                 CURLOPT_CONNECTTIMEOUT => 1,

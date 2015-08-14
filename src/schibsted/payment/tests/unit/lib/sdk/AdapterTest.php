@@ -13,9 +13,9 @@ use schibsted\payment\tests\mocks\LogMock as Logger;
 
 class Adapter extends AdapterBase
 {
-    public $response = ['content' => '', 'code' => 500];
+    public $response = ['content' => '', 'code' => 500, 'latency' => 1];
 
-    protected function _makeRequest($url, $method, $data)
+    protected function _makeRequest($url, $method, $data = null)
     {
         return $this->response;
     }
@@ -38,7 +38,7 @@ class AdapterTest extends \PHPUnit_Framework_TestCase
         $a  = new Adapter(['log_class' => 'schibsted\payment\tests\mocks\LogMock']);
         $this->assertEmpty(Logger::$calls);
         $a->execute('/api/order');
-        $expected = ['debug', 'error'];
+        $expected = ['debug', 'alert'];
         $this->assertEquals($expected, array_keys(Logger::$calls));
         Logger::$calls = [];
     }
@@ -46,7 +46,7 @@ class AdapterTest extends \PHPUnit_Framework_TestCase
     public function testSuccess()
     {
         $a = new Adapter();
-        $a->response = ['content' => json_encode(['id' => 13, 'title' => 'Win']), 'code' => 200];
+        $a->response = ['content' => json_encode(['id' => 13, 'title' => 'Win']), 'code' => 200, 'latency' => 1];
 
         $result = $a->execute('/api/get/title');
         $this->assertTrue($result instanceof Success);
@@ -58,7 +58,7 @@ class AdapterTest extends \PHPUnit_Framework_TestCase
     public function testError()
     {
         $a = new Adapter();
-        $a->response = ['content' => '', 'code' => null];
+        $a->response = ['content' => '', 'code' => null, 'latency' => 1];
 
         $result = $a->execute('/api/get/title');
         $this->assertTrue($result instanceof Error, "Result is " . get_class($result));
@@ -67,7 +67,7 @@ class AdapterTest extends \PHPUnit_Framework_TestCase
     public function testFailure()
     {
         $a = new Adapter();
-        $a->response = ['content' => 1, 'code' => 500];
+        $a->response = ['content' => 1, 'code' => 500, 'latency' => 1];
 
         $result = $a->execute('/api/get/title');
         $this->assertTrue($result instanceof Failure, "Result is " . get_class($result));
