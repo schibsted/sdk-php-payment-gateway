@@ -46,4 +46,30 @@ class OrderTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals($expected, $result);
     }
+
+    public function testCreateOrderWithError()
+    {
+        $content = [
+            'errorCode' => 1203,
+            'errorMessage' => 'Customer\'s bank declined the transaction',
+            'serviceId' => 'PayexPPA',
+            'errorContext' => []
+        ];
+        $adapterMock = $this->getMock('schibsted\payment\sdk\adapters\Test', ['execute']);
+        $adapterMock->expects($this->once())->method('execute')->willReturn(new Error(
+            ['code' => 400, 'content' => $content, 'meta' => []]
+        ));
+        $sdk = new Rest(['connection' => ['adapter' => $adapterMock]]);
+        $order = new Order(['connection' => [], 'sdk' => $sdk]);
+        $result = $sdk->post('/api/order',['name' => 'King Kong']);
+        $this->assertTrue($result instanceof Error);
+        $this->assertEquals($content, $result->getContent());
+
+        $error = new PaymentError($result);
+        $this->assertEquals(PaymentError::CATEGORY_USER_ERROR, $error->category);
+
+        $expected = 'The payment process was stopped by the card issuer. No money was deducted from your account. Please try again.';
+        $result = $error->getUserMessage();
+        $this->assertEquals($expected, $result);
+    }
 }
