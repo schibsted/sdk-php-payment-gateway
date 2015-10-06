@@ -20,7 +20,12 @@ class Rest extends \schibsted\payment\lib\Object
     {
         parent::_init();
         if (array_key_exists('adapter', $this->_connection)) {
-            $this->_adapter_class = $this->_connection['adapter'];
+            if (is_object($this->_connection['adapter'])) {
+                $this->_adapter = $this->_connection['adapter'];
+                $this->_connection['adapter'] = get_class($this->_adapter);
+            } else {
+                $this->_adapter_class = $this->_connection['adapter'];
+            }
         }
     }
 

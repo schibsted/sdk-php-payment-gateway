@@ -4,13 +4,16 @@ namespace schibsted\payment\tests\unit\resources;
 
 use schibsted\payment\resources\Order;
 use schibsted\payment\sdk\response\Success;
+use schibsted\payment\sdk\response\Error;
+use schibsted\payment\sdk\Rest;
+use schibsted\payment\errors\PaymentError;
 
 class OrderTest extends \PHPUnit_Framework_TestCase
 {
 
     public function testFind()
     {
-        $mock = $this->getMock('schibsted\payment\sdk\Rest', ['get'], [['adapter_class' => 'schibsted\payment\sdk\adapters\Test']]);
+        $mock = $this->getMock('schibsted\payment\sdk\Rest', ['get'], [['adapter' => 'schibsted\payment\sdk\adapters\Test']]);
         $orders = new Order(['connection' => [], 'sdk' => $mock]);
         $mock->expects($this->once())->method('get')->with('/api/v1/order', [], [], [])->will($this->returnValue([['id' => 1], ['id' => 2]]));
         $expected = [['id' => 1], ['id' => 2]];
@@ -22,9 +25,9 @@ class OrderTest extends \PHPUnit_Framework_TestCase
 
     public function testInitialize()
     {
-        $mock = $this->getMock('schibsted\payment\sdk\Rest', ['post'], [['adapter_class' => 'schibsted\payment\sdk\adapters\Test']]);
+        $mock = $this->getMock('schibsted\payment\sdk\Rest', ['post'], [['adapter' => 'schibsted\payment\sdk\adapters\Test']]);
         $order = new Order(['connection' => [], 'sdk' => $mock]);
-        $mock->expects($this->once())->method('post')->with('/api/v1/order/1/initialize', [], [], [])->will($this->returnValue(['id' => 1]));
+        $mock->expects($this->once())->method('post')->with('/api/v1/order/1/initialize', [], [], [])->willReturn(['id' => 1]);
         $expected = ['id' => 1];
 
         $result = $order->initialize(1, []);
@@ -34,7 +37,7 @@ class OrderTest extends \PHPUnit_Framework_TestCase
 
     public function testComplete()
     {
-        $mock = $this->getMock('schibsted\payment\sdk\Rest', ['post'], [['adapter_class' => 'schibsted\payment\sdk\adapters\Test']]);
+        $mock = $this->getMock('schibsted\payment\sdk\Rest', ['post'], [['adapter' => 'schibsted\payment\sdk\adapters\Test']]);
         $order = new Order(['connection' => [], 'sdk' => $mock]);
         $mock->expects($this->once())->method('post')->with('/api/v1/order/1/complete', [], [], [])->will($this->returnValue(['id' => 1]));
         $expected = ['id' => 1];
