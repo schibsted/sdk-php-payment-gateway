@@ -31,16 +31,16 @@ class Adapter extends \schibsted\payment\lib\Object implements AdapterInterface
             $url = !empty($result['last_url']) ? $result['last_url'] : $url;
             $content = ['errorCode' => 404, 'errorMessage' => "$url not found"];
             $response = new Failure(['code' => $result['code'], 'content' => $content, 'meta' => $result]);
-            $this->_log('alert', "FAILURE : $errorCode : $errorMessage : " . $request_id . ' : ' . $result['latency'] . 's', "PMS", __FILE__, __CLASS__, __FUNCTION__, __LINE__);
+            $this->_log('alert', "FAILURE : {$content['errorCode']} : {$content['errorMessage']} : " . $request_id . ' : ' . $result['latency'] . 's', "PMS", __FILE__, __CLASS__, __FUNCTION__, __LINE__);
         } elseif ($content && !is_array($content)) {
             $url = !empty($result['last_url']) ? $result['last_url'] : $url;
             $content = ['errorCode' => 500, 'errorMessage' => "$url returned invalid json (not array/object)"];
             $response = new Failure(['code' => $result['code'], 'content' => $content, 'meta' => $result]);
-            $this->_log('alert', "FAILURE : $errorCode : $errorMessage : " . $request_id . ' : ' . $result['latency'] . 's', "PMS", __FILE__, __CLASS__, __FUNCTION__, __LINE__);
+            $this->_log('alert', "FAILURE : {$content['errorCode']} : {$content['errorMessage']} : " . $request_id . ' : ' . $result['latency'] . 's', "PMS", __FILE__, __CLASS__, __FUNCTION__, __LINE__);
         } elseif ($result['code'] >= 500) {
             $content = ['errorCode' => $result['code'], 'errorMessage' => 'Service Unavailable'];
             $response = new Failure(['code' => $result['code'], 'content' => $content, 'meta' => $result]);
-            $this->_log('alert', "FAILURE : $errorCode : $errorMessage : " . $request_id . ' : ' . $result['latency'] . 's', "PMS", __FILE__, __CLASS__, __FUNCTION__, __LINE__);
+            $this->_log('alert', "FAILURE : {$content['errorCode']} : {$content['errorMessage']} : " . $request_id . ' : ' . $result['latency'] . 's', "PMS", __FILE__, __CLASS__, __FUNCTION__, __LINE__);
         } else {
             $meta = $result;
             unset($meta['content']);
