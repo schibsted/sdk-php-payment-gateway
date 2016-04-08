@@ -26,6 +26,7 @@ class Order extends \schibsted\payment\lib\Resource
     const API_FIND        = '';
     const API_COMPLETE    = '/{:id}/complete';
     const API_INITIALIZE  = '/{:id}/initialize';
+    const API_CREDIT      = '/{:id}/credit';
 
     /**
      * Search for orders
@@ -49,5 +50,10 @@ class Order extends \schibsted\payment\lib\Resource
     public function complete($id, array $data = array())
     {
         return $this->_sdk->post($this->api(self::API_COMPLETE, compact('id')), $data);
+    }
+
+    public function credit($id, array $data = array())
+    {
+        return $this->_sdk->post($this->api(self::API_CREDIT, compact('id')), $data);
     }
 }

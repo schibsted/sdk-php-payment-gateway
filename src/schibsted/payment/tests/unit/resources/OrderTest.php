@@ -47,6 +47,18 @@ class OrderTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($expected, $result);
     }
 
+    public function testCredit()
+    {
+        $mock = $this->getMock('schibsted\payment\sdk\Rest', ['post'], [['adapter' => 'schibsted\payment\sdk\adapters\Test']]);
+        $order = new Order(['connection' => [], 'sdk' => $mock]);
+        $mock->expects($this->once())->method('post')->with('/api/v1/order/1/credit', ['orderItemId' => 23, 'amount' => 1000], [], [])->will($this->returnValue(['id' => 1]));
+        $expected = ['id' => 1];
+
+        $result = $order->credit(1, ['orderItemId' => 23, 'amount' => 1000]);
+
+        $this->assertEquals($expected, $result);
+    }
+
     public function testCreateOrderWithError()
     {
         $content = [
