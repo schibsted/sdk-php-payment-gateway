@@ -72,7 +72,10 @@ class AdapterTest extends \PHPUnit_Framework_TestCase
         $result = $a->execute('/api/get/title');
         $this->assertTrue($result instanceof Failure, "Result is " . get_class($result));
         $this->assertEquals(500, $result->getCode());
-        $expected = ['error_number' => 500, 'message' => '/api/get/title returned invalid json (not array/object)', 'developer_message' => '/api/get/title returned invalid json (not array/object)'];
+        $expected = [
+            'errorCode' => 500, 
+            'errorMessage' => '/api/get/title returned invalid json (not array/object)'
+        ];
         $this->assertEquals($expected, $result->getContent());
     }
 }
