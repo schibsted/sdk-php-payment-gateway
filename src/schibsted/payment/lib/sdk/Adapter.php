@@ -19,6 +19,7 @@ class Adapter extends \schibsted\payment\lib\Object implements AdapterInterface
     public function execute($url, $method = 'GET', array $headers = array(), $data = null, array $options = array())
     {
         $this->_log('debug', "Query : $method : $url", "PMS", __FILE__, __CLASS__, __FUNCTION__, __LINE__);
+        $this->_setRequestHeaders($headers);
         $result = $this->_makeRequest($url, $method, $data);
         $request_id = !empty($result['headers']['X-Request-Id']) ? $result['headers']['X-Request-Id'] : '';
 
@@ -76,6 +77,10 @@ class Adapter extends \schibsted\payment\lib\Object implements AdapterInterface
             $class = $this->_log_class;
             $class::$level($message, $category, $file, $class, $function, $line);
         }
+    }
+
+    protected function _setRequestHeaders(array $headers)
+    {
     }
 
     protected function _makeRequest($url, $method, $post = null)

@@ -101,6 +101,16 @@ class Curl extends \schibsted\payment\lib\sdk\Adapter
         return $result;
     }
 
+    protected function _setRequestHeaders(array $headers)
+    {
+        if (empty($this->_adapter_config[CURLOPT_HTTPHEADER])) {
+            $this->_adapter_config[CURLOPT_HTTPHEADER] = [];
+        }
+        foreach ($headers as $h) {
+            $this->_adapter_config[CURLOPT_HTTPHEADER][] = $h;
+        }
+    }
+
     public function extractHeaders($string)
     {
         $parts = explode("\n", $string);
