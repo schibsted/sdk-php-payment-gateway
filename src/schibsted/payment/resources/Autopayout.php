@@ -2,6 +2,8 @@
 
 namespace schibsted\payment\resources;
 
+use schibsted\payment\sdk\response\Failure;
+
 /**
  * To control autopayout feature
  *
@@ -15,13 +17,8 @@ class Autopayout extends \schibsted\payment\lib\Resource
 {
     protected $name = 'v1/autoPayout';
 
-    public function enable($fromPaymentMethodId, $toPaymentMethodId)
+    public function update($id, array $data = array())
     {
-        return $this->create(['fromPaymentMethodId' => $fromPaymentMethodId, 'toPaymentMethodId' => $toPaymentMethodId]);
-    }
-
-    public function disable($fromPaymentMethodId)
-    {
-        return $this->delete($fromPaymentMethodId);
+        return new Failure(['code' => 501, 'content' => 'Not implemented']);
     }
 }
