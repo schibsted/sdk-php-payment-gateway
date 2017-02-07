@@ -35,7 +35,7 @@ class WalletTest extends \PHPUnit_Framework_TestCase
     {
         $mock = $this->getMock('schibsted\payment\sdk\Rest', [], [['adapter_class' => 'schibsted\payment\sdk\adapters\Test']]);
         $wallet = new Wallet(['connection' => [], 'sdk' => $mock]);
-        $mock->expects($this->once())->method('get')->with('/api/v1/wallet/12/operations', [], [], []);
+        $mock->expects($this->once())->method('get')->with('/api/v2/wallet/12/operations', [], [], []);
         $wallet->operations(12);
     }
 }
