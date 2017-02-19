@@ -68,7 +68,7 @@ class Order extends \schibsted\payment\lib\Resource
 
     public function capture($id, array $data = array())
     {
-        return $this->_sdk->post($this->api(self::API_AUTHORIZE, compact('id')), $data);
+        return $this->_sdk->post($this->api(self::API_CAPTURE, compact('id')), $data);
     }
 
     public function credit($id, array $data = array())
