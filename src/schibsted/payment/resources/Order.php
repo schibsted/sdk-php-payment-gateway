@@ -26,6 +26,7 @@ class Order extends \schibsted\payment\lib\Resource
 
     const API_FIND        = '';
     const API_COMPLETE    = '/{:id}/complete';
+    const API_CAPTURE     = '/{:id}/capture';
     const API_AUTHORIZE   = '/{:id}/authorize';
     const API_INITIALIZE  = '/{:id}/initialize';
     const API_CREDIT      = '/{:id}/credit';
@@ -61,6 +62,11 @@ class Order extends \schibsted\payment\lib\Resource
     }
 
     public function authorize($id, array $data = array())
+    {
+        return $this->_sdk->post($this->api(self::API_AUTHORIZE, compact('id')), $data);
+    }
+
+    public function capture($id, array $data = array())
     {
         return $this->_sdk->post($this->api(self::API_AUTHORIZE, compact('id')), $data);
     }
