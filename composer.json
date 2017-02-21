@@ -1,7 +1,7 @@
 {
-  "name": "schibsted/payment-php-sdk",
+  "name": "schibsted/sdk-php-payment-gateway",
   "description": "Schibsted ePayment Platform SDK",
-  "homepage": "https://github.schibsted.io/spt-payment/php-sdk",
+  "homepage": "https://github.com/schibsted/sdk-php-payment-gateway",
   "autoload": {
     "psr-0": {
       "schibsted": "src/"
