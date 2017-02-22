@@ -44,15 +44,4 @@ class PaymentMethodTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($expected, $result);
     }
 
-    public function testMissing()
-    {
-        $mock = $this->getMock('schibsted\payment\sdk\Rest', [], [['adapter_class' => 'schibsted\payment\sdk\adapters\Test']]);
-        $wallet = new PaymentMethod(['connection' => [], 'sdk' => $mock]);
-
-        $result = $wallet->get(15);
-        $this->assertTrue($result instanceof Failure);
-
-        $result = $wallet->update(15);
-        $this->assertTrue($result instanceof Failure);
-    }
 }

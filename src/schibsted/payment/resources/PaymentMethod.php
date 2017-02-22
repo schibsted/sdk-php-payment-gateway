@@ -22,10 +22,16 @@ class PaymentMethod extends \schibsted\payment\lib\Resource
     const API_FIND        = '';
     const API_CREATE      = '';
     const API_VERIFY      = '/{:id}/verify';
+    const API_TRANSLATE   = '/externalId/{:identifier_id}';
 
     public function find(array $query)
     {
         return $this->_sdk->get($this->api(self::API_FIND), $query);
+    }
+
+    public function translate($identifier_id)
+    {
+        return $this->_sdk->get($this->api(self::API_TRANSLATE, compact('identifier_id')));
     }
 
     public function create(array $data = array())
@@ -36,11 +42,6 @@ class PaymentMethod extends \schibsted\payment\lib\Resource
     public function verify($id, array $data = [])
     {
         return $this->_sdk->post($this->api(self::API_VERIFY, compact('id')), $data);
-    }
-
-    public function get($id, array $query = [])
-    {
-        return new Failure(['code' => 501, 'content' => 'Not implemented']);
     }
 
     public function update($id, array $data = array())
