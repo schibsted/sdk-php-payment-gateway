@@ -28,7 +28,7 @@ class ResourceTest extends \PHPUnit_Framework_TestCase
         $sdk = new SdkMock();
         $sdk->id = 99;
         $resource = new Resource(compact('sdk'));
-        $expected = ['/api/res/12', 'object id' => 99, []];
+        $expected = ['/api/res/12', 'object id' => 99, [], [], []];
         $result = $resource->get(12);
         $this->assertEquals($expected, $result);
 
