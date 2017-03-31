@@ -41,38 +41,45 @@ class Order extends \schibsted\payment\lib\Resource
      *         sales, authorizations, deposits, transfers, withdrawals, escrows, new,
      *         initialized, partly_captured,completed, cancelled, credited, pending, failed
      */
-    public function find(array $query)
+    public function find(array $query, array $headers = [], array $options = [])
     {
-        return $this->_sdk->get($this->api(self::API_FIND), $query);
+        $path = $this->api(self::API_FIND);
+        return $this->_sdk->get($path, $query, $headers, $options);
     }
 
-    public function initialize($id, array $data = array())
+    public function initialize($id, array $data = [], array $query = [], array $headers = [], array $options = [])
     {
-        return $this->_sdk->post($this->api(self::API_INITIALIZE, compact('id')), $data);
+        $path = $this->api(self::API_INITIALIZE, compact('id'));
+        return $this->_sdk->post($path, $data, $query, $headers, $options);
     }
 
-    public function status($id)
+    public function status($id, array $query = [], array $headers = [], array $options = [])
     {
-        return $this->_sdk->get($this->api(self::API_STATUS, compact('id')));
+        $path = $this->api(self::API_STATUS, compact('id'));
+        return $this->_sdk->get($path, $query, $headers, $options);
     }
 
-    public function complete($id, array $data = array())
+    public function complete($id, array $data = [], array $query = [], array $headers = [], array $options = [])
     {
-        return $this->_sdk->post($this->api(self::API_COMPLETE, compact('id')), $data);
+        $path = $this->api(self::API_COMPLETE, compact('id'));
+        return $this->_sdk->post($path, $data, $query, $headers, $options);
     }
 
-    public function authorize($id, array $data = array())
+    public function authorize($id, array $data = [], array $query = [], array $headers = [], array $options = [])
     {
-        return $this->_sdk->post($this->api(self::API_AUTHORIZE, compact('id')), $data);
+        $path = $this->api(self::API_AUTHORIZE, compact('id'));
+        return $this->_sdk->post($path, $data, $query, $headers, $options);
     }
 
-    public function capture($id, array $data = array())
+    public function capture($id, array $data = [], array $query = [], array $headers = [], array $options = [])
     {
-        return $this->_sdk->post($this->api(self::API_CAPTURE, compact('id')), $data);
+        $path = $this->api(self::API_CAPTURE, compact('id'));
+        return $this->_sdk->post($path, $data, $query, $headers, $options);
     }
 
-    public function credit($id, array $data = array())
+    public function credit($id, array $data = [], array $query = [], array $headers = [], array $options = [])
     {
-        return $this->_sdk->post($this->api(self::API_CREDIT, compact('id')), $data);
+        $path = $this->api(self::API_CREDIT, compact('id'));
+        return $this->_sdk->post($path, $data, $query, $headers, $options);
     }
 }

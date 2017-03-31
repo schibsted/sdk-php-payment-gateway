@@ -54,24 +54,28 @@ abstract class Resource
         return $this->path() . Utilities::insert($api, $params);
     }
 
-    public function get($id, array $query = [])
+    public function get($id, array $query = [], array $headers = [], array $options = [])
     {
-        return $this->_sdk->get($this->api(self::API_GET, compact('id')), $query);
+        $path = $this->api(self::API_GET, compact('id'));
+        return $this->_sdk->get($path, $query, $headers, $options);
     }
 
-    public function create(array $data = array())
+    public function create(array $data = [], array $query = [], array $headers = [], array $options = [])
     {
-        return $this->_sdk->post($this->api(self::API_CREATE), $data);
+        $path = $this->api(self::API_CREATE);
+        return $this->_sdk->post($path, $data, $query, $headers, $options);
     }
 
-    public function update($id, array $data = array())
+    public function update($id, array $data = [], array $query = [], array $headers = [], array $options = [])
     {
-        return $this->_sdk->post($this->api(self::API_UPDATE, compact('id')), $data);
+        $path = $this->api(self::API_UPDATE, compact('id'));
+        return $this->_sdk->post($path, $data, $query, $headers, $options);
     }
 
-    public function delete($id)
+    public function delete($id, array $query = [], array $headers = [], array $options = [])
     {
-        return $this->_sdk->delete($this->api(self::API_DELETE, compact('id')));
+        $path = $this->api(self::API_DELETE, compact('id'));
+        return $this->_sdk->delete($path, $query, $headers, $options);
     }
 
     public function version()
