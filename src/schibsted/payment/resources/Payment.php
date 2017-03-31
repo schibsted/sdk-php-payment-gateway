@@ -29,37 +29,42 @@ class Payment extends \schibsted\payment\lib\Resource
     const API_TRANSFER    = '/{:id}/transfer';
     const API_WITHDRAW    = '/{:id}/withdraw';
 
-    public function deposit($id, array $data = array())
+    public function deposit($id, array $data = [], array $query = [], array $headers = [], array $options = [])
     {
-        return $this->_sdk->post($this->api(self::API_DEPOSIT, compact('id')), $data);
+        $path = $this->api(self::API_DEPOSIT, compact('id'));
+        return $this->_sdk->post($path, $data, $query, $headers, $options);
     }
 
-    public function initialize($id, array $data = array())
+    public function initialize($id, array $data = [], array $query = [], array $headers = [], array $options = [])
     {
-        return $this->_sdk->post($this->api(self::API_INITIALIZE, compact('id')), $data);
+        $path = $this->api(self::API_INITIALIZE, compact('id'));
+        return $this->_sdk->post($path, $data, $query, $headers, $options);
     }
 
-    public function sale($id, array $data = array())
+    public function sale($id, array $data = [], array $query = [], array $headers = [], array $options = [])
     {
-        return $this->_sdk->post($this->api(self::API_SALE, compact('id')), $data);
+        $path = $this->api(self::API_SALE, compact('id'));
+        return $this->_sdk->post($path, $data, $query, $headers, $options);
     }
 
-    public function transfer($id, array $data = array())
+    public function transfer($id, array $data = [], array $query = [], array $headers = [], array $options = [])
     {
-        return $this->_sdk->post($this->api(self::API_TRANSFER, compact('id')), $data);
+        $path = $this->api(self::API_TRANSFER, compact('id'));
+        return $this->_sdk->post($path, $data, $query, $headers, $options);
     }
 
-    public function withdraw($id, array $data = array())
+    public function withdraw($id, array $data = [], array $query = [], array $headers = [], array $options = [])
     {
-        return $this->_sdk->post($this->api(self::API_WITHDRAW, compact('id')), $data);
+        $path = $this->api(self::API_WITHDRAW, compact('id'));
+        return $this->_sdk->post($path, $data, $query, $headers, $options);
     }
 
-    public function update($id, array $data = array())
+    public function update($id, array $data = [], array $query = [], array $headers = [], array $options = [])
     {
         return new Failure(['code' => 501, 'content' => 'Not implemented']);
     }
 
-    public function delete($id)
+    public function delete($id, array $query = [], array $headers = [], array $options = [])
     {
         return new Failure(['code' => 501, 'content' => 'Not implemented']);
     }

@@ -23,24 +23,24 @@ class Wallet extends \schibsted\payment\lib\Resource
 
     protected $_connection_name = 'spidcash';
 
-    public function operations($id, array $query = [])
+    public function operations($id, array $query = [], array $headers = [], array $options = [])
     {
         $api = $this->base() . Utilities::insert(self::API_WALLET_OPERATIONS, compact('id')) ;
-        return $this->_sdk->get($api, $query);
+        return $this->_sdk->get($api, $query, $headers, $options);
     }
 
-    public function findByUserId($user_id, array $query = [])
+    public function findByUserId($user_id, array $query = [], array $headers = [], array $options = [])
     {
         $api = $this->base() . '/' . Utilities::insert(self::API_WALLETS_BY_USER, compact('user_id'));
-        return $this->_sdk->get($api, $query);
+        return $this->_sdk->get($api, $query, $headers, $options);
     }
 
-    public function update($id, array $data = array())
+    public function update($id, array $data = array(), array $query = [], array $headers = [], array $options = [])
     {
         return new Failure(['code' => 501, 'content' => 'Not implemented']);
     }
 
-    public function delete($id)
+    public function delete($id, array $query = [], array $headers = [], array $options = [])
     {
         return new Failure(['code' => 501, 'content' => 'Not implemented']);
     }

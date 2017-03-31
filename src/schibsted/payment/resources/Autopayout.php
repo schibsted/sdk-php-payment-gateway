@@ -17,7 +17,7 @@ class Autopayout extends \schibsted\payment\lib\Resource
 {
     protected $name = 'v1/autoPayout';
 
-    public function update($id, array $data = array())
+    public function update($id, array $data = [], array $query = [], array $headers = [], array $options = [])
     {
         return new Failure(['code' => 501, 'content' => 'Not implemented']);
     }

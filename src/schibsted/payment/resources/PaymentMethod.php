@@ -24,27 +24,31 @@ class PaymentMethod extends \schibsted\payment\lib\Resource
     const API_VERIFY      = '/{:id}/verify';
     const API_TRANSLATE   = '/externalId/{:identifier_id}';
 
-    public function find(array $query)
+    public function find(array $query, array $headers = [], array $options = [])
     {
-        return $this->_sdk->get($this->api(self::API_FIND), $query);
+        $path = $this->api(self::API_FIND);
+        return $this->_sdk->get($path, $query, $headers, $options);
     }
 
-    public function translate($identifier_id)
+    public function translate($identifier_id, array $query = [], array $headers = [], array $options = [])
     {
-        return $this->_sdk->get($this->api(self::API_TRANSLATE, compact('identifier_id')));
+        $path = $this->api(self::API_TRANSLATE, compact('identifier_id'));
+        return $this->_sdk->get($path, $query, $headers, $options);
     }
 
-    public function create(array $data = array())
+    public function create(array $data = array(), array $query = [], array $headers = [], array $options = [])
     {
-        return $this->_sdk->post($this->api(self::API_CREATE), $data);
+        $path = $this->api(self::API_CREATE);
+        return $this->_sdk->post($path, $data, $query, $headers, $options);
     }
 
-    public function verify($id, array $data = [])
+    public function verify($id, array $data = [], array $query = [], array $headers = [], array $options = [])
     {
-        return $this->_sdk->post($this->api(self::API_VERIFY, compact('id')), $data);
+        $path = $this->api(self::API_VERIFY, compact('id'));
+        return $this->_sdk->post($path, $data, $query, $headers, $options);
     }
 
-    public function update($id, array $data = array())
+    public function update($id, array $data = array(), array $query = [], array $headers = [], array $options = [])
     {
         return new Failure(['code' => 501, 'content' => 'Not implemented']);
     }
