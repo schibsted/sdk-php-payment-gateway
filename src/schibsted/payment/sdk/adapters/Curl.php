@@ -18,9 +18,9 @@ class Curl extends \schibsted\payment\lib\sdk\Adapter
     /**
      * Makes an HTTP request.
      *
-     * @param String $uri the URI to make the request to
-     * @param Array $post the parameters to use for the POST body
-     * @param CurlHandler $ch optional initialized curl handle
+     * @param string $uri the URI to make the request to
+     * @param array $post the parameters to use for the POST body
+     * @param \GuzzleHttp\Ring\Client\CurlHandler $ch optional initialized curl handle
      * @return String the response text
      */
     protected function _makeRequest($url, $method, $post = null, $ch = null)
