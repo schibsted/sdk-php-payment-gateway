@@ -11,6 +11,11 @@ class Shared extends \PHPUnit_Framework_TestCase
 {
 
     protected $connection_name = 'shared';
+    protected $config;
+    /**
+     * @var \schibsted\payment\sdk\Rest|null
+     */
+    protected $sdk;
 
     public function setUp()
     {

@@ -16,6 +16,7 @@ abstract class Resource
     protected $_sdk = null;
 
     protected $_sdk_class = '';
+    protected $name;
 
     public function __construct(array $options = array())
     {
