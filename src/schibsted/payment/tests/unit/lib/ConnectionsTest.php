@@ -1,6 +1,6 @@
 <?php
 
-namespace schibsted\tests\payment\lib;
+namespace schibsted\payment\tests\unit\lib;
 
 use schibsted\payment\lib\Connections;
 
