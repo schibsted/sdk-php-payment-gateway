@@ -2,7 +2,7 @@
 
 namespace schibsted\payment\tests\unit\sdk;
 
-use schibsted\payment\sdk\adapters\Void;
+use schibsted\payment\sdk\adapters\VoidAdapter;
 use schibsted\payment\sdk\adapters\Test;
 use schibsted\payment\sdk\response\Response;
 use schibsted\payment\sdk\response\Failure;
@@ -22,7 +22,7 @@ class ResponseTest extends \PHPUnit_Framework_TestCase
 
     public function testGetResponseFromVoid()
     {
-        $void = new Void();
+        $void = new VoidAdapter();
         $result = $void->execute('/api/order/1');
         $this->assertTrue($result instanceof Response);
         $this->assertEquals(200, $result->getCode());
