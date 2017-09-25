@@ -16,6 +16,14 @@ class Guzzle extends \schibsted\payment\lib\sdk\Adapter
         'headers' => ['User-Agent' => self::USER_AGENT]
     ];
 
+    /***
+     * Makes an HTTP request.
+     *
+     * @param string $url
+     * @param string $method
+     * @param string $post
+     * @return array
+     */
     protected function _makeRequest($url, $method, $post = null)
     {
         $start = microtime(true);

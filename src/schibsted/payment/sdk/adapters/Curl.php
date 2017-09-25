@@ -18,10 +18,11 @@ class Curl extends \schibsted\payment\lib\sdk\Adapter
     /**
      * Makes an HTTP request.
      *
-     * @param String $uri the URI to make the request to
-     * @param Array $post the parameters to use for the POST body
-     * @param CurlHandler $ch optional initialized curl handle
-     * @return String the response text
+     * @param string $url the URI to make the request to
+     * @param string $method GET|POST|PATCH|DELETE
+     * @param array $post the parameters to use for the POST body
+     * @param resource $ch optional initialized curl handle such as returned by curl_init
+     * @return array
      */
     protected function _makeRequest($url, $method, $post = null, $ch = null)
     {
@@ -111,6 +112,10 @@ class Curl extends \schibsted\payment\lib\sdk\Adapter
         }
     }
 
+    /**
+     * @param string $string Header string found in a HTTP message
+     * @return array key => value array of headers
+     */
     public function extractHeaders($string)
     {
         $parts = explode("\n", $string);
