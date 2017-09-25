@@ -5,4 +5,4 @@ php:
 before_script:
   - composer install
 script:
-  - src/schibsted/payment/tests/runtests
+  - vendor/bin/phpunit -d memory_limit=512M --colors --stop-on-error --exclude-group disabled -c src/schibsted/payment/tests/phpunit.xml --stderr $@
