@@ -4,7 +4,7 @@ namespace schibsted\payment\sdk\adapters;
 
 use schibsted\payment\sdk\response\Response;
 
-class Void implements \schibsted\payment\lib\sdk\AdapterInterface
+class VoidAdapter implements \schibsted\payment\lib\sdk\AdapterInterface
 {
 
     public function execute($url, $method = 'GET', array $headers = array(), $data = null, array $options = array())
