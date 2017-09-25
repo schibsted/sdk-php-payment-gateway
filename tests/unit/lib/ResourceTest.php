@@ -3,6 +3,7 @@
 namespace schibsted\payment\tests\unit\lib;
 
 use schibsted\payment\lib\Resource as ResourceAbstract;
+use schibsted\payment\sdk\adapters\Test;
 use schibsted\payment\sdk\response\Success;
 
 class Resource extends ResourceAbstract
@@ -32,7 +33,7 @@ class ResourceTest extends \PHPUnit_Framework_TestCase
         $result = $resource->get(12);
         $this->assertEquals($expected, $result);
 
-        $sdk = ['connection' => ['host' => 'http://example.com', 'adapter' => 'schibsted\payment\sdk\adapters\Test']];
+        $sdk = ['connection' => ['host' => 'http://example.com', 'adapter' => Test::class]];
         $resource = new Resource(compact('sdk'));
         $result = $resource->update(14, ['name' => 'John']);
         $this->assertTrue($result instanceof Success);

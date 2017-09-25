@@ -3,8 +3,9 @@
   "description": "Schibsted ePayment Platform SDK",
   "homepage": "https://github.com/schibsted/sdk-php-payment-gateway",
   "autoload": {
-    "psr-0": {
-      "schibsted": "src/"
+    "psr-4": {
+      "schibsted\\payment\\": "src/",
+      "schibsted\\payment\\tests\\": "tests/"
     }
   },
   "require-dev": {
