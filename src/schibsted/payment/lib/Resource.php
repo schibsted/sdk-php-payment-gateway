@@ -32,7 +32,7 @@ abstract class Resource
         } else {
             $config = $options;
         }
-        $this->_sdk = new Rest($config);
+        $this->_sdk = new Rest($options);
     }
 
     protected function base()
