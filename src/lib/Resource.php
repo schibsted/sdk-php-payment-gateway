@@ -20,7 +20,7 @@ abstract class Resource
 
     public function __construct(array $options = array())
     {
-        $class = false;
+        $config = $options;
         if (array_key_exists('sdk', $options)) {
             $sdk = $options['sdk'];
             if (is_object($sdk)) {
@@ -29,10 +29,8 @@ abstract class Resource
             } elseif (is_array($sdk)) {
                 $config = $sdk;
             }
-        } else {
-            $config = $options;
         }
-        $this->_sdk = new Rest($options);
+        $this->_sdk = new Rest($config);
     }
 
     protected function base()

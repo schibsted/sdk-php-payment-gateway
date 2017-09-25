@@ -17,20 +17,14 @@
         <testsuite name="Unit Tests">
             <directory suffix="Test.php">unit/</directory>
         </testsuite>
-        <testsuite name="Integration Tests">
-            <directory suffix="Test.php">integration/</directory>
-        </testsuite>
     </testsuites>
-
-
 
     <filter>
         <whitelist addUncoveredFilesFromWhitelist="true">
-            <directory suffix=".php">../.</directory>
+            <directory suffix=".php">../src</directory>
             <exclude>
-                <directory>../tests</directory>
-                <file>../sdk/adapters/Artax.php</file>
-                <file>../sdk/adapters/Guzzle.php</file>
+                <file>../src/sdk/adapters/Artax.php</file>
+                <file>../src/sdk/adapters/Guzzle.php</file>
             </exclude>
         </whitelist>
     </filter>

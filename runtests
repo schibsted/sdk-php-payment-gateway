@@ -10,4 +10,4 @@ fi
 
 # Nice option: --testdox
 
-./../../../../vendor/bin/phpunit -d memory_limit=512M --colors --stop-on-error --exclude-group disabled -c phpunit.xml --stderr $@
+vendor/bin/phpunit -d memory_limit=512M --colors --stop-on-error --exclude-group disabled -c tests/phpunit.xml --stderr $@
