@@ -2,24 +2,10 @@
 
 [![Travis](https://img.shields.io/travis/schibsted/sdk-php-payment-gateway.svg)](https://travis-ci.org/schibsted/sdk-php-payment-gateway)
 
-## Install
+## Install with composer
 
-Add this to your `composer.json`
-
-```json
-{
-    "require": {
-        "schibsted/sdk-php-payment-gateway": "*",
-        "schibsted/sdk-php": "*"
-    },
-    "repositories": [
-        {
-          "type": "git",
-          "url": "https://github.com/schibsted/sdk-php-payment-gateway.git"
-        }
-    ]
-}
-```
+ - `composer require schibsted/sdk-php-payment-gateway` (install this library)
+ - `composer require schibsted/sdk-php` (install SPiD sdk required for getting authentication tokens)
 
 ## Usage
 
