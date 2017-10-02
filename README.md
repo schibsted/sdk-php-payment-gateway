@@ -22,16 +22,16 @@ $spid_config = [
     VGS_Client::PRODUCTION      => false,
     VGS_Client::API_VERSION     => 2,
 ];
+
+$spid_client = new VGS_Client($spid_config);
+$oauth_token = $spid_client->auth();
+
 $payment_gateway_config = [
 	'host' => 'https://api-gateway-stage.payment.schibsted.no',
 	'port' => '443',
-    'adapter_config' => [ CURLOPT_CONNECTTIMEOUT_MS => 1000]
+    'adapter_config' => [ CURLOPT_CONNECTTIMEOUT_MS => 1000],
+    'token' => $oauth_token
 ];
-
-$spid_client = new VGS_Client($spid_config);
-$access_token = $spid_client->auth();
-
-$payment_gateway_config['adapter_config'][CURLOPT_HTTPHEADER] = ['oauth_token:' . $access_token];
 
 $amount = 12000; // 120 euro, amount in CENT
 $vat = 2500; // 25%, amount in hundredths

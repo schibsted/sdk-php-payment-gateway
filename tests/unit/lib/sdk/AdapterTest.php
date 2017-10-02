@@ -14,25 +14,22 @@ use schibsted\payment\tests\mocks\LogMock as Logger;
 class Adapter extends AdapterBase
 {
     public $response = ['content' => '', 'code' => 500, 'latency' => 1];
+    public $headers = [];
 
     protected function _makeRequest($url, $method, $data = null)
     {
         return $this->response;
+    }
+
+    protected function _setRequestHeaders(array $headers)
+    {
+        $this->headers = $headers;
     }
 }
 
 
 class AdapterTest extends \PHPUnit_Framework_TestCase
 {
-    /**
-    * @expectedException Exception
-    */
-    public function testExceptionOnMissingMethod()
-    {
-        $a = new AdapterBase();
-        $a->execute('/api/2/method');
-    }
-
     public function testLogging()
     {
         $a  = new Adapter(['log_class' => 'schibsted\payment\tests\mocks\LogMock']);

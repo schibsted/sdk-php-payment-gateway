@@ -6,19 +6,26 @@ use schibsted\payment\sdk\response\Success;
 use schibsted\payment\sdk\response\Failure;
 use schibsted\payment\sdk\response\Error;
 
-class Adapter extends \schibsted\payment\lib\Object implements AdapterInterface
+abstract class Adapter extends \schibsted\payment\lib\Object implements AdapterInterface
 {
-    protected $_autoConfig = array('host', 'port', 'debug', 'adapter_config', 'proxy', 'log_class');
+    protected $_autoConfig = array('host', 'port', 'debug', 'adapter_config', 'proxy', 'log_class', 'token', 'api_key');
     protected $_debug = false;
     protected $_host = 'http://localhost';
     protected $_port = '80';
     protected $_adapter_config = [];
     protected $_proxy = [];
     protected $_log_class = null; // Class that supports log methods `debug`, `alert`, `warning`, `info`, `notice`
+    protected $_token = null;
+    protected $_api_key = null;
 
     public function execute($url, $method = 'GET', array $headers = array(), $data = null, array $options = array())
     {
         $this->_log('debug', "Query : $method : $url", "PMS", __FILE__, __CLASS__, __FUNCTION__, __LINE__);
+        if ($this->_token) {
+            $headers[] = "Authorization: Bearer {$this->_token}";
+        } elseif ($this->_api_key) {
+            $headers[] = "Api-Key: {$this->_api_key}";
+        }
         $this->_setRequestHeaders($headers);
         $result = $this->_makeRequest($url, $method, $data);
         $request_id = !empty($result['headers']['X-Request-Id']) ? $result['headers']['X-Request-Id'] : '';
@@ -79,14 +86,9 @@ class Adapter extends \schibsted\payment\lib\Object implements AdapterInterface
         }
     }
 
-    protected function _setRequestHeaders(array $headers)
-    {
-    }
+    abstract protected function _setRequestHeaders(array $headers);
 
-    protected function _makeRequest($url, $method, $post = null)
-    {
-        throw new \Exception(__FUNCTION__ . " must be implemented by subclasses of " . __CLASS__);
-    }
+    abstract protected function _makeRequest($url, $method, $post = null);
 
     protected function _extractMeta(array $result)
     {

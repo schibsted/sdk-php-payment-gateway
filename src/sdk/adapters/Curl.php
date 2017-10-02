@@ -41,6 +41,7 @@ class Curl extends \schibsted\payment\lib\sdk\Adapter
         if (!isset($opts[CURLOPT_HTTPHEADER])) {
             $opts[CURLOPT_HTTPHEADER] = [];
         }
+        $opts[CURLOPT_HTTPHEADER][] = 'Accept: application/json';
         $opts[CURLOPT_HEADER] = true;
         // $opts[CURLOPT_VERBOSE] = true;
 
@@ -70,7 +71,6 @@ class Curl extends \schibsted\payment\lib\sdk\Adapter
         $opts[CURLOPT_HTTPHEADER][] = 'Expect:';
 
         curl_setopt_array($ch, $opts);
-
         try {
             $result['content']  = curl_exec($ch);
         } catch (\Exception $e) {
