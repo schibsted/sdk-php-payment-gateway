@@ -9,7 +9,6 @@
     }
   },
   "require-dev": {
-    "amphp/artax": "v1.0.0-rc6",
     "phpunit/phpunit": "4.2.6"
   }
 }
