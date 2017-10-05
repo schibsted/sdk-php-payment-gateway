@@ -20,11 +20,11 @@ class Curl extends \schibsted\payment\lib\sdk\Adapter
      *
      * @param string $url the URI to make the request to
      * @param string $method GET|POST|PATCH|DELETE
-     * @param array $post the parameters to use for the POST body
+     * @param array $data_string the parameters to use for the POST body
      * @param resource $ch optional initialized curl handle such as returned by curl_init
      * @return array
      */
-    protected function _makeRequest($url, $method, $post = null, $ch = null)
+    protected function _makeRequest($url, $method, $data_string = null, $ch = null)
     {
         $result = [];
         $start = microtime(true);
@@ -41,7 +41,6 @@ class Curl extends \schibsted\payment\lib\sdk\Adapter
         if (!isset($opts[CURLOPT_HTTPHEADER])) {
             $opts[CURLOPT_HTTPHEADER] = [];
         }
-        $opts[CURLOPT_HTTPHEADER][] = 'Accept: application/json';
         $opts[CURLOPT_HEADER] = true;
         // $opts[CURLOPT_VERBOSE] = true;
 
@@ -57,9 +56,7 @@ class Curl extends \schibsted\payment\lib\sdk\Adapter
             case 'POST':
             case 'post':
                 $opts[CURLOPT_CUSTOMREQUEST] = 'POST';
-                $opts[CURLOPT_HTTPHEADER][] = 'Content-Type: application/json';
-                if ($post) {
-                    $data_string = is_string($post) ? $post : json_encode($post);
+                if ($data_string) {
                     $opts[CURLOPT_POSTFIELDS] = $data_string;
                     $result['post_string'] = $data_string; // For debugging, see what was posted
                     $opts[CURLOPT_HTTPHEADER][] = 'Content-Length: ' . strlen($data_string);
@@ -84,7 +81,7 @@ class Curl extends \schibsted\payment\lib\sdk\Adapter
         if ($result['content'] === false) {
             $result['errno'] = curl_errno($ch);
             $result['error'] = curl_error($ch);
-            $result['request'] = compact('url', 'method', 'post');
+            $result['request'] = compact('url', 'method', 'data_string');
             if ($result['errno'] == 28) {
                 $result['code'] = 408;
             }

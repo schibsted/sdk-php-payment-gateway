@@ -18,6 +18,20 @@ abstract class Adapter extends \schibsted\payment\lib\Object implements AdapterI
     protected $_token = null;
     protected $_api_key = null;
 
+    /**
+     * Execute a remote request to $method HOST:PORT/$url with $headers and request body from $data
+     *
+     * By default, the data, if present, will be converted to a JSON and a 'Content-Type: appliction/json' will be
+     * added to headers. Can be overrided by setting 'content'=>'form' in $options.
+     *
+     * Reponse is always expected to be JSON
+     *
+     * @param string $url the path exluding scheme, domain and port
+     * @param string $method GET|POST|DELETE etc
+     * @param array $headers extra headers to add to request, NOT keyed, just `<name>: <value>` string list
+     * @param array|null $data The post body request, will be converted to JSON by default
+     * @param array $options Override default behavor, supports `content`
+     */
     public function execute($url, $method = 'GET', array $headers = array(), $data = null, array $options = array())
     {
         $this->_log('debug', "Query : $method : $url", "PMS", __FILE__, __CLASS__, __FUNCTION__, __LINE__);
@@ -26,6 +40,18 @@ abstract class Adapter extends \schibsted\payment\lib\Object implements AdapterI
         } elseif ($this->_api_key) {
             $headers[] = "Api-Key: {$this->_api_key}";
         }
+        $headers[] = 'Accept: application/json';
+        if ($data) {
+            if (!empty($options['content']) && $options['content'] === 'form') {
+                $data = is_string($data) ? $data : http_build_query($data);
+                $content_type = 'application/x-www-form-urlencoded';
+            } else {
+                $data = is_string($data) ? $data : json_encode($data);
+                $content_type = 'application/json';
+            }
+            $headers[] = "Content-Type: {$content_type}";
+        }
+
         $this->_setRequestHeaders($headers);
         $result = $this->_makeRequest($url, $method, $data);
         $request_id = !empty($result['headers']['X-Request-Id']) ? $result['headers']['X-Request-Id'] : '';
