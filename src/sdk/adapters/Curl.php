@@ -32,7 +32,8 @@ class Curl extends \schibsted\payment\lib\sdk\Adapter
             $ch = curl_init();
         }
 
-        $url = $this->_host . ':' . $this->_port . $url;
+        $port = empty($this->_port) ? '' : ':' . $this->_port;
+        $url = $this->_host . $port . $url;
 
         $opts = $this->_adapter_config + $this->_adapter_config_defaults + $this->addProxy();
         $opts[CURLOPT_URL] = $url;

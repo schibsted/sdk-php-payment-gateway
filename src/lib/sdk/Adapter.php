@@ -11,7 +11,7 @@ abstract class Adapter extends \schibsted\payment\lib\Object implements AdapterI
     protected $_autoConfig = array('host', 'port', 'debug', 'adapter_config', 'proxy', 'log_class', 'token', 'api_key');
     protected $_debug = false;
     protected $_host = 'http://localhost';
-    protected $_port = '80';
+    protected $_port = null;
     protected $_adapter_config = [];
     protected $_proxy = [];
     protected $_log_class = null; // Class that supports log methods `debug`, `alert`, `warning`, `info`, `notice`
@@ -22,7 +22,7 @@ abstract class Adapter extends \schibsted\payment\lib\Object implements AdapterI
      * Execute a remote request to $method HOST:PORT/$url with $headers and request body from $data
      *
      * By default, the data, if present, will be converted to a JSON and a 'Content-Type: appliction/json' will be
-     * added to headers. Can be overrided by setting 'content'=>'form' in $options.
+     * added to headers. Can be overwritten by setting 'content'=>'form' in $options.
      *
      * Reponse is always expected to be JSON
      *
@@ -31,6 +31,7 @@ abstract class Adapter extends \schibsted\payment\lib\Object implements AdapterI
      * @param array $headers extra headers to add to request, NOT keyed, just `<name>: <value>` string list
      * @param array|null $data The post body request, will be converted to JSON by default
      * @param array $options Override default behavor, supports `content`
+     * @return Error|Failure|Success
      */
     public function execute($url, $method = 'GET', array $headers = array(), $data = null, array $options = array())
     {
