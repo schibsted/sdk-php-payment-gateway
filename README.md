@@ -4,39 +4,38 @@
 
 ## Install with composer
 
- - `composer require schibsted/sdk-php-payment-gateway` (install this library)
- - `composer require schibsted/sdk-php` (install SPiD sdk required for getting authentication tokens)
+ - `composer require schibsted/sdk-php-payment-gateway`
 
 ## Usage
 
 ```php
 <?php
+use schibsted\payment\lib\Connections;
 use schibsted\payment\sdk\response\Success;
-use schibsted\payment\sdk\response\Response;
 use schibsted\payment\resources\Order;
+use schibsted\payment\sdk\Auth;
 
-$spid_config = [
-    VGS_Client::CLIENT_ID       => '<YOUR ID>',
-    VGS_Client::CLIENT_SECRET   => '<YOUR SECRET>',
-    VGS_Client::CLIENT_SIGN_SECRET => '<YOUR SIGNATURE SECRET>',
-    VGS_Client::PRODUCTION      => false,
-    VGS_Client::API_VERSION     => 2,
-];
+Connections::config(Connections::ENV_PRE, [
+    'client_id'         => '<YOUR ID>',
+    'secret'            => '<YOUR SECRET>',
+    'redirect_uri'      => '<YOUR REDIRECT URI>',
+    'adapter_config' => [CURLOPT_CONNECTTIMEOUT_MS => 1000]
+]);
+Connections::setEnv(Connections::ENV_PRE);
 
-$spid_client = new VGS_Client($spid_config);
-$oauth_token = $spid_client->auth();
+/***/
 
-$payment_gateway_config = [
-	'host' => 'https://api-gateway-stage.payment.schibsted.no',
-	'port' => '443',
-    'adapter_config' => [ CURLOPT_CONNECTTIMEOUT_MS => 1000],
-    'token' => $oauth_token
-];
+$connection = Connections::get();
+$tokens = (new Auth(compact('connection')))->getToken(); // Store in session or other cache
+
+/***/
+
+$connection['token'] =  $tokens['access_token'];
 
 $amount = 12000; // 120 euro, amount in CENT
 $vat = 2500; // 25%, amount in hundredths
 
-$order_res = new Order($payment_gateway_config);
+$order_res = new Order(compact('connection'));
 $data = [
     "purchaseFlow" => "SALE",
     "fromPaymentProviderInfo" => [
