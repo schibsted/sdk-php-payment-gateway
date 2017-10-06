@@ -6,27 +6,50 @@ use schibsted\payment\lib\Connections;
 
 class ConnectionsTest extends \PHPUnit_Framework_TestCase
 {
-    public function testConfig()
+
+    public function setUp()
     {
-        $uid = getmyuid();
-        Connections::config($uid, ['host' => 'ROFL', 'port' => 99]);
-        $expected = ['host' => 'ROFL', 'port' => 99];
-        $result = Connections::get($uid);
-        $this->assertEquals($expected, $result);
+        $ref_class = new \ReflectionClass(Connections::class);
+
+        $ref_env = $ref_class->getProperty('_env');
+        $ref_env->setAccessible(true);
+        $ref_env->setValue(Connections::ENV_PRE);
+
+        $ref_configs = $ref_class->getProperty('_configs');
+        $ref_configs->setAccessible(true);
+        $ref_configs->setValue([]);
     }
 
-    public function testDefaults()
+    public function testBlank()
     {
-
-        $uid = getmyuid();
-        Connections::config($uid);
-        $expected = ['host' => 'http://localhost', 'port' => 80];
-        $result = Connections::get($uid);
-        $this->assertEquals($expected, $result);
+        $result = Connections::get();
+        $this->assertEquals([], $result);
+        $this->assertEquals(Connections::ENV_PRE, Connections::current());
     }
 
-    public function testGettingEmpty()
+    public function testAddDifferentConfigToDifferentEnvs()
     {
-        $this->assertEquals([], Connections::get('blahblah'));
+        Connections::config(Connections::ENV_PRE, ['name' => 'value-1']);
+        Connections::config(Connections::ENV_PROD, ['name' => 'value-2']);
+        $expected = [
+            'name' => 'value-1',
+            'host' => Connections::GATEWAY_DOMAIN_PRE,
+            'auth' => Connections::AUTH_DOMAIN_PRE
+        ];
+        $result = Connections::get();
+        $this->assertEquals($expected, $result);
+
+        Connections::setEnv(Connections::ENV_PROD);
+
+        $result = Connections::getConfigForEnv(Connections::ENV_PRE);
+        $this->assertEquals($expected, $result);
+
+        $expected = [
+            'name' => 'value-2',
+            'host' => Connections::GATEWAY_DOMAIN_PROD,
+            'auth' => Connections::AUTH_DOMAIN_PROD
+        ];
+        $result = Connections::get();
+        $this->assertEquals($expected, $result);
     }
 }
