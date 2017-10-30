@@ -6,12 +6,12 @@ use schibsted\payment\sdk\response\Failure;
 use schibsted\payment\lib\Utilities;
 
 /**
- * To control PMS wallets
+ * To control Wallets
  *
- * PMS has these relevant api endpoints:
+ * Payment Gateway has these relevant api endpoints:
  *
- * (spidcash)  POST    /api/v{version}/wallet
- * (spidcash)  GET     /api/v{version}/wallet/{walletId}
+ * POST    /api/v{version}/wallet
+ * GET     /api/v{version}/wallet/{walletId}
  */
 class Wallet extends \schibsted\payment\lib\Resource
 {

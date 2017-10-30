@@ -7,11 +7,11 @@ use schibsted\payment\sdk\response\Failure;
 /**
  * To control autopayout feature
  *
- * PMS has these relevant api endpoints:
+ * Payment Gateway has these relevant api endpoints:
  *
- * (spidcash)  POST    /api/v{version}/autoPayout body: {"fromPaymentMethodId": 12, "toPaymentMethodId": 77}
- * (spidcash)  GET     /api/v{version}/autoPayout/{methodId}
- * (spidcash)  DELETE  /api/v{version}/autoPayout/{methodId}
+ * POST    /api/v{version}/autoPayout body: {"fromPaymentMethodId": 12, "toPaymentMethodId": 77}
+ * GET     /api/v{version}/autoPayout/{methodId}
+ * DELETE  /api/v{version}/autoPayout/{methodId}
  */
 class Autopayout extends \schibsted\payment\lib\Resource
 {

@@ -3,20 +3,18 @@
 namespace schibsted\payment\resources;
 
 /**
- * To control PMS orders
+ * Payment Gateway has these relevant API endpoints
  *
- * PMS has these relevant API endpoints
+ * GET     /api/v{version}/order
  *
- * (spidpay.order)     GET     /api/v{version}/order
+ * POST    /api/v{version}/order
+ * GET     /api/v{version}/order/{orderId}
+ * POST    /api/v{version}/order/{orderId}
+ * DELETE  /api/v{version}/order/{orderId}
  *
- * (spidpay.order)     POST    /api/v{version}/order
- * (spidpay.order)     GET     /api/v{version}/order/{orderId}
- * (spidpay.order)     POST    /api/v{version}/order/{orderId}
- * (spidpay.order)     DELETE  /api/v{version}/order/{orderId}
- *
- * (spidpay.order)     POST    /api/v{version}/order/{orderId}/initialize
- * (spidpay.order)     POST    /api/v{version}/order/{orderId}/complete
- * (spidpay.order)     POST    /api/v{version}/order/{orderId}/authorize
+ * POST    /api/v{version}/order/{orderId}/initialize
+ * POST    /api/v{version}/order/{orderId}/complete
+ * POST    /api/v{version}/order/{orderId}/authorize
  *
  */
 class Order extends \schibsted\payment\lib\Resource

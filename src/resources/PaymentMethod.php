@@ -7,12 +7,12 @@ use schibsted\payment\sdk\response\Failure;
 /**
  * To be used for controller payment methods
  *
- * These relevant API endpoints in PMS
+ * These relevant API endpoints in Payment Gateway
  *
- * (spidpay.payment) GET     /api/v{version}/method
- * (spidpay.payment) POST    /api/v{version}/method
- * (spidpay.payment) DELETE  /api/v{version}/method/{paymentMethodId}
- * (spidpay.payment) POST    /api/v{version}/method/{paymentMethodId}/verify
+ * GET     /api/v{version}/method
+ * POST    /api/v{version}/method
+ * DELETE  /api/v{version}/method/{paymentMethodId}
+ * POST    /api/v{version}/method/{paymentMethodId}/verify
  */
 class PaymentMethod extends \schibsted\payment\lib\Resource
 {
