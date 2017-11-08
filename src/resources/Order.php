@@ -22,6 +22,8 @@ class Order extends \schibsted\payment\lib\Resource
 
     protected $name = 'v1/order';
 
+    const API_CHARGE      = 'v1/charge';
+
     const API_FIND        = '';
     const API_COMPLETE    = '/{:id}/complete';
     const API_CAPTURE     = '/{:id}/capture';
@@ -43,6 +45,13 @@ class Order extends \schibsted\payment\lib\Resource
     {
         $path = $this->api(self::API_FIND);
         return $this->_sdk->get($path, $query, $headers, $options);
+    }
+
+    public function charge(array $data = [], array $query = [], array $headers = [], array $options = [])
+    {
+
+        $path = $this->base() . '/' . self::API_CHARGE;
+        return $this->_sdk->post($path, $data, $query, $headers, $options);
     }
 
     public function initialize($id, array $data = [], array $query = [], array $headers = [], array $options = [])
