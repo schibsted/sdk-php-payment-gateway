@@ -5,7 +5,7 @@ namespace schibsted\payment\tests\unit\errors;
 use schibsted\payment\sdk\response\Error;
 use schibsted\payment\errors\PaymentError;
 
-class PaymentErrorTest extends \PHPUnit_Framework_TestCase
+class PaymentErrorTest extends \PHPUnit\Framework\TestCase
 {
     public function testUserError()
     {

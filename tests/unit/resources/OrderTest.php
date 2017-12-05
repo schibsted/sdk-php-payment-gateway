@@ -8,12 +8,12 @@ use schibsted\payment\sdk\response\Error;
 use schibsted\payment\sdk\Rest;
 use schibsted\payment\errors\PaymentError;
 
-class OrderTest extends \PHPUnit_Framework_TestCase
+class OrderTest extends \PHPUnit\Framework\TestCase
 {
 
     public function testFind()
     {
-        $mock = $this->getMock('schibsted\payment\sdk\Rest', ['get'], [['adapter' => 'schibsted\payment\sdk\adapters\Test']]);
+        $mock = $this->createMock('schibsted\payment\sdk\Rest', ['get'], [['adapter' => 'schibsted\payment\sdk\adapters\Test']]);
         $orders = new Order(['connection' => [], 'sdk' => $mock]);
         $mock->expects($this->once())->method('get')->with('/api/v1/order', [], [], [])->will($this->returnValue([['id' => 1], ['id' => 2]]));
         $expected = [['id' => 1], ['id' => 2]];
@@ -25,7 +25,7 @@ class OrderTest extends \PHPUnit_Framework_TestCase
 
     public function testInitialize()
     {
-        $mock = $this->getMock('schibsted\payment\sdk\Rest', ['post'], [['adapter' => 'schibsted\payment\sdk\adapters\Test']]);
+        $mock = $this->createMock('schibsted\payment\sdk\Rest', ['post'], [['adapter' => 'schibsted\payment\sdk\adapters\Test']]);
         $order = new Order(['connection' => [], 'sdk' => $mock]);
         $mock->expects($this->once())->method('post')->with('/api/v1/order/1/initialize', [], [], [])->willReturn(['id' => 1]);
         $expected = ['id' => 1];
@@ -37,7 +37,7 @@ class OrderTest extends \PHPUnit_Framework_TestCase
 
     public function testComplete()
     {
-        $mock = $this->getMock('schibsted\payment\sdk\Rest', ['post'], [['adapter' => 'schibsted\payment\sdk\adapters\Test']]);
+        $mock = $this->createMock('schibsted\payment\sdk\Rest', ['post'], [['adapter' => 'schibsted\payment\sdk\adapters\Test']]);
         $order = new Order(['connection' => [], 'sdk' => $mock]);
         $mock->expects($this->once())->method('post')->with('/api/v1/order/1/complete', [], [], [])->will($this->returnValue(['id' => 1]));
         $expected = ['id' => 1];
@@ -49,7 +49,7 @@ class OrderTest extends \PHPUnit_Framework_TestCase
 
     public function testCredit()
     {
-        $mock = $this->getMock('schibsted\payment\sdk\Rest', ['post'], [['adapter' => 'schibsted\payment\sdk\adapters\Test']]);
+        $mock = $this->createMock('schibsted\payment\sdk\Rest', ['post'], [['adapter' => 'schibsted\payment\sdk\adapters\Test']]);
         $order = new Order(['connection' => [], 'sdk' => $mock]);
         $mock->expects($this->once())->method('post')->with('/api/v1/order/1/credit', ['orderItemId' => 23, 'amount' => 1000], [], [])->will($this->returnValue(['id' => 1]));
         $expected = ['id' => 1];
@@ -67,7 +67,7 @@ class OrderTest extends \PHPUnit_Framework_TestCase
             'serviceId' => 'PayexPPA',
             'errorContext' => []
         ];
-        $adapterMock = $this->getMock('schibsted\payment\sdk\adapters\Test', ['execute']);
+        $adapterMock = $this->createMock('schibsted\payment\sdk\adapters\Test', ['execute']);
         $adapterMock->expects($this->once())->method('execute')->willReturn(new Error(
             ['code' => 400, 'content' => $content, 'meta' => []]
         ));

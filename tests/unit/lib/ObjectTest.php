@@ -17,7 +17,7 @@ class Klassen extends BaseObject
     }
 }
 
-class ObjectTest extends \PHPUnit_Framework_TestCase
+class ObjectTest extends \PHPUnit\Framework\TestCase
 {
     public function testAutoconfig()
     {

@@ -4,7 +4,7 @@ namespace schibsted\payment\tests\unit\lib;
 
 use schibsted\payment\lib\Connections;
 
-class ConnectionsTest extends \PHPUnit_Framework_TestCase
+class ConnectionsTest extends \PHPUnit\Framework\TestCase
 {
     public function testConfig()
     {

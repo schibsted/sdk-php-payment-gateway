@@ -9,7 +9,7 @@ use schibsted\payment\sdk\response\Failure;
 use schibsted\payment\sdk\response\Success;
 use schibsted\payment\sdk\response\Error;
 
-class ResponseTest extends \PHPUnit_Framework_TestCase
+class ResponseTest extends \PHPUnit\Framework\TestCase
 {
 
     public function test()

@@ -7,7 +7,7 @@ use schibsted\payment\sdk\response\Failure;
 use schibsted\payment\sdk\response\Success;
 use schibsted\payment\lib\Connections;
 
-class Shared extends \PHPUnit_Framework_TestCase
+class Shared extends \PHPUnit\Framework\TestCase
 {
 
     protected $connection_name = 'shared';

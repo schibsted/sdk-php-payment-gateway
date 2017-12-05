@@ -6,7 +6,7 @@ use schibsted\payment\sdk\Rest;
 use schibsted\payment\sdk\response\Success;
 use schibsted\payment\sdk\response\Error;
 
-class RestTest extends \PHPUnit_Framework_TestCase
+class RestTest extends \PHPUnit\Framework\TestCase
 {
 
     protected $connection_rest_test = ['connection' => ['adapter' => 'schibsted\payment\sdk\adapters\Test']];
@@ -46,7 +46,7 @@ class RestTest extends \PHPUnit_Framework_TestCase
             'serviceId' => 'PayexPPA',
             'errorContext' => []
         ];
-        $adapterMock = $this->getMock('schibsted\payment\sdk\adapters\Test', ['execute']);
+        $adapterMock = $this->createMock('schibsted\payment\sdk\adapters\Test', ['execute']);
         $adapterMock->expects($this->once())->method('execute')->willReturn(new Error(
             ['code' => 400, 'content' => $content, 'meta' => []]
         ));

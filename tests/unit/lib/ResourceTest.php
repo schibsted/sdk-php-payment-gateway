@@ -21,7 +21,7 @@ class SdkMock
     }
 }
 
-class ResourceTest extends \PHPUnit_Framework_TestCase
+class ResourceTest extends \PHPUnit\Framework\TestCase
 {
 
     public function testConstruct()
@@ -58,7 +58,7 @@ class ResourceTest extends \PHPUnit_Framework_TestCase
 
     public function testGet()
     {
-        $mock = $this->getMock('schibsted\payment\sdk\Rest', ['get'], [['adapter' => 'schibsted\payment\sdk\adapters\Test']]);
+        $mock = $this->createMock('schibsted\payment\sdk\Rest', ['get'], [['adapter' => 'schibsted\payment\sdk\adapters\Test']]);
         $o = new Resource(['sdk' => $mock]);
 
         $mock->expects($this->once())->method('get')->with('/api/res/1', [], [], [])->will($this->returnValue(['id' => 1]));
@@ -71,7 +71,7 @@ class ResourceTest extends \PHPUnit_Framework_TestCase
 
     public function testCreate()
     {
-        $mock = $this->getMock('schibsted\payment\sdk\Rest', ['post'], [['adapter' => 'schibsted\payment\sdk\adapters\Test']]);
+        $mock = $this->createMock('schibsted\payment\sdk\Rest', ['post'], [['adapter' => 'schibsted\payment\sdk\adapters\Test']]);
         $resource = new Resource(['connection' => [], 'sdk' => $mock]);
         $mock->expects($this->once())->method('post')->with('/api/res', [], [], [])->will($this->returnValue(['id' => 1]));
         $expected = ['id' => 1];
@@ -83,7 +83,7 @@ class ResourceTest extends \PHPUnit_Framework_TestCase
 
     public function testUpdate()
     {
-        $mock = $this->getMock('schibsted\payment\sdk\Rest', ['post'], [['adapter' => 'schibsted\payment\sdk\adapters\Test']]);
+        $mock = $this->createMock('schibsted\payment\sdk\Rest', ['post'], [['adapter' => 'schibsted\payment\sdk\adapters\Test']]);
         $resource = new Resource(['connection' => [], 'sdk' => $mock]);
         $mock->expects($this->once())->method('post')->with('/api/res/1', [], [], [])->will($this->returnValue(['id' => 1]));
         $expected = ['id' => 1];
@@ -95,7 +95,7 @@ class ResourceTest extends \PHPUnit_Framework_TestCase
 
     public function testDelete()
     {
-        $mock = $this->getMock('schibsted\payment\sdk\Rest', ['delete'], [['adapter' => 'schibsted\payment\sdk\adapters\Test']]);
+        $mock = $this->createMock('schibsted\payment\sdk\Rest', ['delete'], [['adapter' => 'schibsted\payment\sdk\adapters\Test']]);
         $resource = new Resource(['connection' => [], 'sdk' => $mock]);
         $mock->expects($this->once())->method('delete')->with('/api/res/1', [], [], [])->will($this->returnValue(['id' => 1]));
         $expected = ['id' => 1];
@@ -107,7 +107,7 @@ class ResourceTest extends \PHPUnit_Framework_TestCase
 
     public function testVersion()
     {
-        $mock = $this->getMock('schibsted\payment\sdk\Rest', ['get'], [['adapter' => 'schibsted\payment\sdk\adapters\Test']]);
+        $mock = $this->createMock('schibsted\payment\sdk\Rest', ['get'], [['adapter' => 'schibsted\payment\sdk\adapters\Test']]);
         $resource = new Resource(['connection' => [], 'sdk' => $mock]);
         $mock->expects($this->once())->method('get')->with('/api/version', [], [], [])->will($this->returnValue(['id' => 1]));
         $expected = ['id' => 1];

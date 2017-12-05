@@ -28,7 +28,7 @@ class Adapter extends AdapterBase
 }
 
 
-class AdapterTest extends \PHPUnit_Framework_TestCase
+class AdapterTest extends \PHPUnit\Framework\TestCase
 {
     public function testLogging()
     {

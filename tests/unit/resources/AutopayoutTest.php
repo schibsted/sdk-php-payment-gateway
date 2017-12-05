@@ -5,7 +5,7 @@ namespace schibsted\payment\tests\unit\resources;
 use schibsted\payment\resources\Autopayout;
 use schibsted\payment\sdk\response\Success;
 
-class AutopayoutTest extends \PHPUnit_Framework_TestCase
+class AutopayoutTest extends \PHPUnit\Framework\TestCase
 {
     public function testCreate()
     {
