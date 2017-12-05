@@ -2,7 +2,7 @@
 
 namespace schibsted\payment\tests\mocks;
 
-class LogMock extends \schibsted\payment\lib\Object
+class LogMock extends \schibsted\payment\lib\BaseObject
 {
     public static $calls = [];
 

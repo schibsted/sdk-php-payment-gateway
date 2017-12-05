@@ -2,7 +2,7 @@
 
 namespace schibsted\payment\sdk\response;
 
-class Response extends \schibsted\payment\lib\Object
+class Response extends \schibsted\payment\lib\BaseObject
 {
 
     protected $_autoConfig = ['code', 'content', 'meta'];

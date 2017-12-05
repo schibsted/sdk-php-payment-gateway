@@ -2,9 +2,9 @@
 
 namespace schibsted\payment\tests\unit\lib;
 
-use schibsted\payment\lib\Object;
+use schibsted\payment\lib\BaseObject;
 
-class Klassen extends Object
+class Klassen extends BaseObject
 {
     protected $_one = 'one';
     protected $_two = 'two';

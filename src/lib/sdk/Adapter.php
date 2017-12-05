@@ -6,7 +6,7 @@ use schibsted\payment\sdk\response\Success;
 use schibsted\payment\sdk\response\Failure;
 use schibsted\payment\sdk\response\Error;
 
-abstract class Adapter extends \schibsted\payment\lib\Object implements AdapterInterface
+abstract class Adapter extends \schibsted\payment\lib\BaseObject implements AdapterInterface
 {
     protected $_autoConfig = array('host', 'port', 'debug', 'adapter_config', 'proxy', 'log_class', 'token', 'api_key');
     protected $_debug = false;

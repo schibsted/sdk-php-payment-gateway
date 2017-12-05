@@ -4,7 +4,7 @@ namespace schibsted\payment\sdk;
 
 use schibsted\payment\sdk\response\Response;
 
-class Rest extends \schibsted\payment\lib\Object
+class Rest extends \schibsted\payment\lib\BaseObject
 {
 
     protected $_autoConfig = array('connection');

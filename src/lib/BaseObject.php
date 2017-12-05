@@ -7,7 +7,7 @@ namespace schibsted\payment\lib;
  *
  * Features universal constructor with auto extracting of config array
  */
-class Object
+class BaseObject
 {
 
     /**

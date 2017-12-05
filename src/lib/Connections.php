@@ -2,7 +2,7 @@
 
 namespace schibsted\payment\lib;
 
-class Connections extends Object
+class Connections extends BaseObject
 {
     protected static $_configs = [];
 
