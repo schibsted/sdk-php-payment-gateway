@@ -44,16 +44,4 @@ class PaymentMethodTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals($expected, $result);
     }
 
-    public function testSearch()
-    {
-        $mock = $this->createMock('schibsted\payment\sdk\Rest', ['get'], [['adapter_class' => 'schibsted\payment\sdk\adapters\Test']]);
-        $payment = new PaymentMethod(['connection' => [], 'sdk' => $mock]);
-        $mock->expects($this->once())->method('get')->with('/api/v1/method/identifier', ['identifier' => '*0001', 'psp' => 'PAYEX_CC'], [], [])->will($this->returnValue([['id' => 1]]));
-        $expected = [['id' => 1]];
-
-        $result = $payment->search('*0001', 'PAYEX_CC');
-
-        $this->assertEquals($expected, $result);
-    }
-
 }
