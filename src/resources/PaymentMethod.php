@@ -23,6 +23,7 @@ class PaymentMethod extends \schibsted\payment\lib\Resource
     const API_CREATE      = '';
     const API_VERIFY      = '/{:id}/verify';
     const API_TRANSLATE   = '/externalId/{:identifier_id}';
+    const API_SEARCH      = '/identifier';
 
     public function find(array $query, array $headers = [], array $options = [])
     {
@@ -51,5 +52,14 @@ class PaymentMethod extends \schibsted\payment\lib\Resource
     public function update($id, array $data = array(), array $query = [], array $headers = [], array $options = [])
     {
         return new Failure(['code' => 501, 'content' => 'Not implemented']);
+    }
+
+    public function search($identifier, $psp, array $query = [], array $headers = [], array $options = [])
+    {
+        $query['identifier'] = $identifier;
+        $query['psp'] = $psp;
+
+        $path = $this->api(self::API_SEARCH);
+        return $this->_sdk->get($path, $query, $headers, $options);
     }
 }
